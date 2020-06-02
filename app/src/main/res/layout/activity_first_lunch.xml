@@ -1,71 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".FirstLunchActivity">
+    tools:context=".ui.FirstLunchActivity">
 
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="205dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="100dp"
+        android:text="@string/app_title"
+        android:textColor="@color/white"
+        android:textSize="60sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="20dp" />
+
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:orientation="vertical">
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="200dp"
+        android:text="@string/app_description"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/btn_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="1.0"
+        android:layout_marginStart="20dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:text="MAKE YOUR TRIP PRO"
-            android:textColor="@color/white"
-            android:textSize="60dp">
-
-        </TextView>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="350dp"
-        android:orientation="vertical">
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
+        android:background="#BA286793"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/btn_signup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:text="Travel the world with a group of new friends.We will be happy to provide you with all the informations that can safely make you descovring the world."
-            android:textColor="@color/white">
-
-        </TextView>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btn_signup"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="450dp"
-        android:orientation="vertical">
+        android:layout_gravity="center"
+        android:layout_marginBottom="80dp"
+        android:background="#BA286793"
+        android:text="@string/sign_up"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_goneMarginTop="200dp"
+        tools:layout_goneMarginTop="200dp" />
 
-        <Button
-            android:id="@+id/btn_login"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="#BA286793"
-            android:text="Login"
-            android:textColor="@color/white"></Button>
-
-        <Button
-            android:id="@+id/btn_signup"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="#BA286793"
-            android:text="Sign up"
-            android:textColor="@color/white"></Button>
-
-    </LinearLayout>
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
