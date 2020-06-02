@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_description">سافر عبر العالم مع أصدقاء جدد. سنكون ممتنين بتزويدك بكل المعلومات التي ستمكنك من السفر بأمان</string>
+    <string name="login">تسجيل دخول</string>
+    <string name="sign_up">حساب جديد</string>
+</resources>
