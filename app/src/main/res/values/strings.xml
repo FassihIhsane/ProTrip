@@ -4,4 +4,6 @@
     <string name="app_description">Travel the world with a group of new friends.We will be happy to provide you with all the informations that can safely make you descovring the world.</string>
     <string name="login">Login</string>
     <string name="sign_up">Sign up</string>
+    <string name="password">Password</string>
+
 </resources>

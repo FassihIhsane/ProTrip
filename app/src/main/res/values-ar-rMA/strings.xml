@@ -3,4 +3,5 @@
     <string name="app_description">سافر عبر العالم مع أصدقاء جدد. سنكون ممتنين بتزويدك بكل المعلومات التي ستمكنك من السفر بأمان</string>
     <string name="login">تسجيل دخول</string>
     <string name="sign_up">حساب جديد</string>
+    <string name="password">كلمة السر</string>
 </resources>
