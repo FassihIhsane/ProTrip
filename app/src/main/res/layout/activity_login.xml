@@ -59,7 +59,8 @@
             android:drawableLeft="@drawable/ic_mail"
             android:drawablePadding="16dp"
             android:hint="@string/login"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:importantForAutofill="no" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -68,7 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/button_login"
-        android:text="Login"
+        android:text="@string/login"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
