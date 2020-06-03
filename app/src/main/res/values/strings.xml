@@ -5,5 +5,9 @@
     <string name="login">Login</string>
     <string name="sign_up">Sign up</string>
     <string name="password">Password</string>
+    <string name="full_name">Full name</string>
+    <string name="welcome">WELCOME,</string>
+    <string name="start">Sign up to start your adventure</string>
+    <string name="email">Email</string>
 
 </resources>
