@@ -9,5 +9,8 @@
     <string name="welcome">WELCOME,</string>
     <string name="start">Sign up to start your adventure</string>
     <string name="email">Email</string>
+    <string name="profil">Profil</string>
+    <string name="logout">Logout</string>
+    <string name="save">Save</string>
 
 </resources>

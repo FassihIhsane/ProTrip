@@ -8,10 +8,24 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.protrip.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class FirstLunchActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button login, register;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user != null)  {
+            startActivity(new Intent(this, MapActivity.class));
+            finish();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +33,7 @@ public class FirstLunchActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_first_lunch);
 
         initUI();
+
     }
 
     private void initUI() {
@@ -26,6 +41,7 @@ public class FirstLunchActivity extends AppCompatActivity implements View.OnClic
         register= findViewById(R.id.btn_signup);
         login.setOnClickListener(this);
         register.setOnClickListener(this);
+
     }
 
     @Override
