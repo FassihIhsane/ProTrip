@@ -12,5 +12,7 @@
     <string name="profil">Profil</string>
     <string name="logout">Logout</string>
     <string name="save">Save</string>
+    <string name="title_activity_maps">Home</string>
+    <string name="title_activity_maps2">Map</string>
 
 </resources>

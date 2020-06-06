@@ -22,7 +22,7 @@ public class FirstLunchActivity extends AppCompatActivity implements View.OnClic
 
         FirebaseUser user = mAuth.getCurrentUser();
         if(user != null)  {
-            startActivity(new Intent(this, MapActivity.class));
+            startActivity(new Intent(this, MapsActivity.class));
             finish();
         }
     }
