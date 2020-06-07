@@ -4,4 +4,13 @@
     <color name="colorPrimaryDark">#286793</color>
     <color name="colorAccent">#D81B60</color>
     <color name="white">#ffff</color>
+
+    <!-- dialog marker colors -->
+    <color name="dialog_marker_delete_bg">#F30000</color>
+    <color name="dialog_marker_delete_txt">@color/white</color>
+    <color name="dialog_marker_message_bg">#00FF0A</color>
+    <color name="dialog_marker_message_txt">@color/white</color>
+    <color name="dialog_marker_add_bg">#0691FF</color>
+    <color name="dialog_marker_add_txt">@color/white</color>
+
 </resources>
