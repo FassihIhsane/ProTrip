@@ -14,5 +14,6 @@
     <string name="save">Save</string>
     <string name="title_activity_maps">Home</string>
     <string name="title_activity_maps2">Map</string>
+    <string name="register">Don\'t have account? Signup</string>
 
 </resources>

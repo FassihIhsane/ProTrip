@@ -14,18 +14,6 @@ import com.google.firebase.auth.FirebaseUser;
 public class FirstLunchActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button login, register;
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        FirebaseUser user = mAuth.getCurrentUser();
-        if(user != null)  {
-            startActivity(new Intent(this, MapsActivity.class));
-            finish();
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +21,6 @@ public class FirstLunchActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_first_lunch);
 
         initUI();
-
     }
 
     private void initUI() {
@@ -49,11 +36,13 @@ public class FirstLunchActivity extends AppCompatActivity implements View.OnClic
         switch (v.getId()) {
 
             case R.id.btn_login:
-                startActivity(new Intent(this,LoginActivity.class) );
+                startActivity(new Intent(this,LoginActivity.class));
+                finish();
                 break;
 
             case R.id.btn_signup:
                 startActivity(new Intent(this,SignupActivity.class) );
+                finish();
                 break;
 
         }

@@ -33,7 +33,6 @@
             android:name=".ui.MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".ui.ProfileActivity" />
-        <activity android:name=".ui.MapActivity" />
         <activity
             android:name=".ui.SignupActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
