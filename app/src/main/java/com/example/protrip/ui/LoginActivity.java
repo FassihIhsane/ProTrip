@@ -5,12 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.protrip.R;
@@ -20,27 +20,15 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.regex.Pattern;
-
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "LoginActivityTag";
     private Button loginBtn;
     private EditText emailET,passwordET;
+    private TextView signup;
     private ProgressBar loginProgress;
 
     private FirebaseAuth mAuth;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            startActivity(new Intent(this, MapActivity.class));
-            finish();
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +44,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         passwordET = findViewById(R.id.password);
         loginProgress = findViewById(R.id.login_progress);
         loginBtn.setOnClickListener(this);
+
+        signup = findViewById(R.id.signup);
+        signup.setOnClickListener(this);
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -74,7 +65,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             break;
 
+            case R.id.signup:
+                showSignup();
+                break;
+
         }
+    }
+
+    private void showSignup() {
+        startActivity(new Intent(this, SignupActivity.class));
+        finish();
     }
 
     private void loginUser(String email, String password) {
@@ -93,18 +93,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             // Sign in success, update UI with the signed-in user's information
                            // Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            startActivity(new Intent(LoginActivity.this, MapActivity.class));
+                            startActivity(new Intent(LoginActivity.this, MapsActivity.class));
                             finish();
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             //Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                             toggleLogin();
                         }
 
-                        // ...
                     }
                 });
     }

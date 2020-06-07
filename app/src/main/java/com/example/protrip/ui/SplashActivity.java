@@ -8,6 +8,8 @@ import android.os.Handler;
 
 import com.example.protrip.R;
 import com.example.protrip.util.Constant;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -27,7 +29,11 @@ public class SplashActivity extends AppCompatActivity {
         }, Constant.SPLASH_DELAY);*/
 
         handler.postDelayed(() -> {
-            Intent intent = new Intent(SplashActivity.this, FirstLunchActivity.class);
+
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            Class<?> activity = (user != null) ? MapsActivity.class : FirstLunchActivity.class;
+
+            Intent intent = new Intent(SplashActivity.this, activity);
             startActivity(intent);
             finish();
         }, Constant.SPLASH_DELAY);

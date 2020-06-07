@@ -140,7 +140,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 .setTitle("Account created")
                 .setMessage(msg)
                 .setPositiveButton(android.R.string.yes, (dialog, which) -> {
-                    startActivity(new Intent(this,MapActivity.class));
+                    startActivity(new Intent(this,MapsActivity.class));
                     finish();
                 })
                 .setIcon(R.drawable.ic_check)
