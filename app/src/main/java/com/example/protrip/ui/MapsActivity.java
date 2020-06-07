@@ -5,24 +5,32 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.example.protrip.R;
+import com.example.protrip.customui.MarkerDialog;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+    private static final String TAG = "MapsActivityDebug";
     private GoogleMap mMap;
+    private ArrayList<Marker> myMarkers = new ArrayList<>();
 
     private FirebaseAuth mAuth;
 
@@ -79,20 +87,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         startActivity(new Intent(this,ProfileActivity.class));
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera | Latitude & Longitude
+        /* Add a marker in Sydney and move the camera | Latitude & Longitude
         LatLng sydney = new LatLng(-34, 151);
         MarkerOptions sydnyMarker = new MarkerOptions().position(sydney)
                                                        .title("Marker in Sydney");
@@ -100,5 +99,38 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // Move camera view to sydny
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        */
+
+        setUpMarker();
+    }
+
+    private void setUpMarker() {
+
+        mMap.setOnMapClickListener(latLng -> {
+
+            // Add marker to map
+            MarkerOptions newMarkerOpt = new MarkerOptions().position(latLng)
+                                                            .title("Marker "+myMarkers.size());
+
+            Marker newMarker = mMap.addMarker(newMarkerOpt);
+            newMarker.setDraggable(true);
+
+            // Add it to my markers list
+            myMarkers.add(newMarker);
+
+        });
+
+        mMap.setOnMarkerClickListener(marker -> {
+
+            setUpMarkerDialog(marker);
+
+            return false;
+        });
+    }
+
+    private void setUpMarkerDialog(Marker marker) {
+
+        MarkerDialog markerDialog = new MarkerDialog(this, marker);
+        markerDialog.show();
     }
 }
