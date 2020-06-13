@@ -6,4 +6,5 @@ public interface Constant {
 
     // Firebase documents
     String USERS = "Users";
+    String TRIPS = "Trips";
 }

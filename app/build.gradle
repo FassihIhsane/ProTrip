@@ -36,7 +36,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    //sdp (scalable dp)
-    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+
+    implementation 'com.intuit.sdp:sdp-android:1.0.6' //sdp (scalable dp)
+
+    implementation 'android.lib.snackbar:Snackbar:1.0.0'
+
 
 }

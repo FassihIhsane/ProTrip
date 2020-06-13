@@ -1,20 +1,30 @@
 package com.example.protrip.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.lib.widget.snackbar.Snackbar;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.protrip.R;
-import com.example.protrip.customui.MarkerDialog;
-import com.google.android.gms.maps.CameraUpdateFactory;
+import com.example.protrip.data.Trip;
+import com.example.protrip.util.Constant;
+import com.example.protrip.util.DB;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -23,16 +33,27 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener, DialogInterface.OnDismissListener {
 
     private static final String TAG = "MapsActivityDebug";
     private GoogleMap mMap;
-    private ArrayList<Marker> myMarkers = new ArrayList<>();
+    private Marker mMarker;
+    private Dialog markerDialog;
+    private TextView destination;
+    private ProgressBar crudProgress;
+    private ImageButton add , delete, message, update;
+    private Trip mTrip;
+    private HashMap<String, Marker> fetchedTrips;
 
     private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +72,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
+        mUser = mAuth.getCurrentUser();
     }
 
     @Override
@@ -76,6 +97,47 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        mMap = googleMap;
+
+        setUpMarker();
+        initTrips();
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+
+            case R.id.add :
+                addTrip();
+                break;
+
+            case R.id.delete :
+                deleteTrip();
+                break;
+
+            case R.id.message :
+                sendMessage();
+                break;
+
+            case R.id.update:
+                updateTrip();
+        }
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+
+        // Masterpiece handles every case
+        if(mTrip == null){
+
+            mMarker.remove();
+        }
+    }
+
     private void logout() {
         mAuth.signOut();
         startActivity(new Intent(this,FirstLunchActivity.class));
@@ -87,21 +149,43 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         startActivity(new Intent(this,ProfileActivity.class));
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+    private void initTrips() {
 
-        /* Add a marker in Sydney and move the camera | Latitude & Longitude
-        LatLng sydney = new LatLng(-34, 151);
-        MarkerOptions sydnyMarker = new MarkerOptions().position(sydney)
-                                                       .title("Marker in Sydney");
-        mMap.addMarker(sydnyMarker);
+        fetchedTrips = new HashMap<>();
+        DB.getReference(Constant.TRIPS)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-        // Move camera view to sydny
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        */
+                        GenericTypeIndicator<HashMap<String, Trip>> genericTypeIndicator  = new GenericTypeIndicator<HashMap<String, Trip>>() {};
+                        HashMap<String, Trip> trips = dataSnapshot.getValue(genericTypeIndicator);
 
-        setUpMarker();
+                        if(trips != null){
+
+                            for(Trip t : trips.values()){
+
+                                addMarkerToMap(t);
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    private void addMarkerToMap(Trip t) {
+
+        Marker addedMarker = mMap.addMarker(
+                new MarkerOptions().position(t.getLatLng())
+                        .title(t.getDestination())
+        );
+
+        addedMarker.setTag(t);
+        fetchedTrips.put(t.getId(), addedMarker);
     }
 
     private void setUpMarker() {
@@ -110,13 +194,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             // Add marker to map
             MarkerOptions newMarkerOpt = new MarkerOptions().position(latLng)
-                                                            .title("Marker "+myMarkers.size());
+                    .title("");
 
             Marker newMarker = mMap.addMarker(newMarkerOpt);
-            newMarker.setDraggable(true);
-
-            // Add it to my markers list
-            myMarkers.add(newMarker);
+            setUpMarkerDialog(newMarker); // Ihsane liked it
 
         });
 
@@ -130,7 +211,161 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void setUpMarkerDialog(Marker marker) {
 
-        MarkerDialog markerDialog = new MarkerDialog(this, marker);
+        final Trip trip =  (marker.getTag() != null) ? (Trip) marker.getTag() : null;
+
+        markerDialog = new Dialog(this);
+        markerDialog.setContentView(R.layout.marker_dialog);
+        destination =markerDialog.findViewById(R.id.destination);
+        add = markerDialog.findViewById(R.id.add);
+        delete = markerDialog.findViewById(R.id.delete);
+        message = markerDialog.findViewById(R.id.message);
+        update = markerDialog.findViewById(R.id.update);
+        crudProgress = markerDialog.findViewById(R.id.crud_progress);
+        mMarker = marker;
+
+        mTrip = trip;
+        secureMarkerOperations(trip);
+
+        add.setOnClickListener(this);
+        delete.setOnClickListener(this);
+        message.setOnClickListener(this);
+        update.setOnClickListener(this);
+        markerDialog.setOnDismissListener(this);
+        destination.setText(marker.getTitle());     // Set destination of the trip to EditText
+
         markerDialog.show();
+    }
+
+    private void secureMarkerOperations(Trip trip) {
+
+        if(trip != null){
+
+            // If it wasn't created by the logged user
+            if(!trip.getUserId().equals(mUser.getUid())){
+
+                delete.setVisibility(View.GONE);
+                add.setVisibility(View.GONE);
+                update.setVisibility(View.GONE);
+                message.setVisibility(View.VISIBLE);
+                destination.setEnabled(false);
+                message.setLayoutParams(getSingleParam(4.0f));
+
+            }else{
+
+                add.setVisibility(View.GONE);
+                update.setVisibility(View.VISIBLE);
+                message.setVisibility(View.GONE);
+
+                LinearLayout.LayoutParams param = getSingleParam(2.0f);
+                delete.setLayoutParams(param);
+                update.setLayoutParams(param);
+            }
+        }
+    }
+
+    private void updateTrip() {
+
+        if(mTrip != null){
+
+            final String newDestination = destination.getText().toString();
+            mTrip.setDestination(
+                    TextUtils.isEmpty(newDestination) ? mTrip.getDestination() : newDestination
+            );
+
+            DB.getReference(Constant.TRIPS)
+              .child(mTrip.getId())
+              .setValue(mTrip)
+              .addOnCompleteListener(task ->{
+
+                  if(task.isSuccessful()){
+
+                      showSnackBar("Trip was updated successfully!");
+                      markerDialog.dismiss();
+
+                      // Holy fuck this was very challenging | it took about 2hours :V
+                      mMarker.remove();
+                      fetchedTrips.get(mTrip.getId())
+                                  .remove();
+                      addMarkerToMap(mTrip);
+                  }
+              });
+        }
+
+    }
+
+    private void sendMessage() {
+
+        // TODO send message
+    }
+
+    private void deleteTrip() {
+
+        if(mTrip != null){
+
+            DB.getReference(Constant.TRIPS)
+              .child(mTrip.getId())
+              .removeValue()
+              .addOnCompleteListener(task ->{
+
+                if(task.isSuccessful()){
+
+                    showSnackBar("Trip was deleted successfully!");
+                    markerDialog.dismiss();
+                    fetchedTrips.get(mTrip.getId())
+                                .remove();
+                }
+            });
+        }
+    }
+
+    private void addTrip() {
+
+        final String _destination = destination.getText().toString();
+        if(!TextUtils.isEmpty(_destination)){
+            toggleProgress(add);
+            LatLng ltLn =mMarker.getPosition();
+            Trip trip = new Trip(_destination, mUser.getUid(), ltLn.longitude, ltLn.latitude);
+            String id =DB.getKey(Constant.TRIPS);
+            trip.setId(id);
+            DB.getReference(Constant.TRIPS)
+                    .child(id)
+                    .setValue(trip)
+                    .addOnCompleteListener(task -> {
+
+                        if(task.isSuccessful()){
+                            toggleProgress(add);
+                            markerDialog.dismiss();
+                            showSnackBar("Trip was added successfully");
+                        }
+                    });
+        }
+
+    }
+
+    private void showSnackBar(String msg) {
+
+        Snackbar.with(MapsActivity.this)
+                .setText(msg)
+                .setDuration(Snackbar.LENGTH_SHORT)
+                .show();
+    }
+
+    private void toggleProgress(View v) {
+
+        v.setVisibility(
+                (v.getVisibility() == View.VISIBLE) ? View.GONE : View.VISIBLE
+        );
+        crudProgress.setVisibility(
+                (crudProgress.getVisibility() == View.VISIBLE) ? View.GONE : View.VISIBLE
+        );
+    }
+
+    private LinearLayout.LayoutParams getSingleParam(float weight){
+
+        return new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                weight
+        );
     }
 }

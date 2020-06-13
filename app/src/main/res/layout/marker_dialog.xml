@@ -6,20 +6,21 @@
     android:padding="@dimen/_25sdp">
 
     <EditText
-        android:id="@+id/title"
-        android:hint="@string/destination_hint"
+        android:id="@+id/destination"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/_24sdp"
-        tools:text="Title of the marker"
         android:gravity="center"
-        android:padding="@dimen/_12sdp"/>
+        android:hint="@string/destination_hint"
+        android:padding="@dimen/_12sdp"
+        android:textSize="@dimen/_24sdp"
+        tools:text="Title of the marker" />
 
     <LinearLayout
+        android:id="@+id/crud_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="3"
-        android:layout_below="@id/title">
+        android:weightSum="4"
+        android:layout_below="@id/destination">
 
         <ImageButton
             android:src="@drawable/ic_delete"
@@ -27,7 +28,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="@dimen/_25sdp"
-            android:background="@null"/>
+            android:background="@null" />
 
         <ImageButton
             android:id="@+id/add"
@@ -35,7 +36,8 @@
             android:layout_weight="1"
             android:layout_height="@dimen/_24sdp"
             android:background="@null"
-            android:src="@drawable/ic_add"/>
+            android:src="@drawable/ic_add"
+            android:visibility="visible"/>
 
         <ImageButton
             android:id="@+id/message"
@@ -44,8 +46,29 @@
             android:layout_height="@dimen/_24sdp"
             android:background="@null"
             android:textSize="@dimen/_14sdp"
-            android:src="@drawable/ic_message"/>
+            android:src="@drawable/ic_message"
+            android:visibility="gone"/>
+
+        <ImageButton
+            android:id="@+id/update"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/_24sdp"
+            android:background="@null"
+            android:textSize="@dimen/_14sdp"
+            android:src="@drawable/ic_update"
+            android:visibility="gone"/>
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/crud_progress"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_margin="@dimen/_12sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/crud_holder"/>
 
 </RelativeLayout>
