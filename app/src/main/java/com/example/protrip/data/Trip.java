@@ -1,6 +1,7 @@
 package com.example.protrip.data;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.database.Exclude;
 
 import java.util.Date;
 
@@ -70,6 +71,7 @@ public class Trip {
         this.date = date;
     }
 
+    @Exclude
     public LatLng getLatLng(){
 
         return new LatLng(this.latitude, this.longitude);
