@@ -1,15 +1,19 @@
 package com.example.protrip.data;
 
+import androidx.annotation.NonNull;
+
+import com.example.protrip.util.Constant;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.Exclude;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Trip {
 
-    private String id, destination, userId;
+    private String id, destination, userId, date;
     private double longitude, latitude;
-    private long date;
 
     public Trip() {
     }
@@ -19,8 +23,14 @@ public class Trip {
         this.userId = userId;
         this.longitude = longitude;
         this.latitude = latitude;
-        this.date = new Date().getTime();
+        this.date = new SimpleDateFormat(Constant.DATE_FORMAT, Locale.getDefault()).format(new Date());
 
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.destination + " | "+this.userId+" | "+this.id;
     }
 
     public String getId() {
@@ -63,11 +73,11 @@ public class Trip {
         this.latitude = latitude;
     }
 
-    public long getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(long date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

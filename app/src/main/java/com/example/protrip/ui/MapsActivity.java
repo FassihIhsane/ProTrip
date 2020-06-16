@@ -2,6 +2,7 @@ package com.example.protrip.ui;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
@@ -10,7 +11,6 @@ import android.content.Intent;
 import android.lib.widget.snackbar.Snackbar;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -33,12 +33,15 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.Objects;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener, DialogInterface.OnDismissListener {
 
@@ -87,14 +90,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.profil:
-                showProfil();
+                launchActivity(ProfileActivity.class);
                 return true;
             case R.id.logout:
                 logout();
                 return true;
+            case R.id.my_trips:
+                launchActivity(MyTripsActivity.class);
+                return true;
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    private void launchActivity(Class<?> activity){
+
+        startActivity(new Intent(this, activity));
     }
 
     @Override
@@ -144,37 +155,58 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         finish();
     }
 
-    private void showProfil() {
-
-        startActivity(new Intent(this,ProfileActivity.class));
-    }
-
     private void initTrips() {
 
+        SimpleDateFormat sdf = new SimpleDateFormat(Constant.DATE_FORMAT, Locale.getDefault());
+        Calendar today = Calendar.getInstance();
+        today.add(Calendar.DAY_OF_YEAR, -1);
+        today.set(Calendar.HOUR_OF_DAY, 23);
+        today.set(Calendar.MINUTE, 59);
+
+        final String startDate = sdf.format(today.getTime());
+
         fetchedTrips = new HashMap<>();
+
         DB.getReference(Constant.TRIPS)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+          .orderByChild("date")
+          .startAt(startDate)
+          .addChildEventListener(new ChildEventListener() {
+              @Override
+              public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                        GenericTypeIndicator<HashMap<String, Trip>> genericTypeIndicator  = new GenericTypeIndicator<HashMap<String, Trip>>() {};
-                        HashMap<String, Trip> trips = dataSnapshot.getValue(genericTypeIndicator);
+                  Trip t = dataSnapshot.getValue(Trip.class);
+                  if(t != null){
 
-                        if(trips != null){
+                      addMarkerToMap(t);
+                  }
+              }
 
-                            for(Trip t : trips.values()){
+              @Override
+              public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                                addMarkerToMap(t);
-                            }
-                        }
+              }
 
-                    }
+              @Override
+              public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                  Trip t = dataSnapshot.getValue(Trip.class);
+                  if(t != null){
 
-                    }
-                });
+                      Objects.requireNonNull(fetchedTrips.get(t.getId()))
+                             .remove();
+                  }
+              }
+
+              @Override
+              public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+              }
+
+              @Override
+              public void onCancelled(@NonNull DatabaseError databaseError) {
+
+              }
+          });
     }
 
     private void addMarkerToMap(Trip t) {
