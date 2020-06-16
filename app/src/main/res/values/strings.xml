@@ -19,5 +19,6 @@
     <string name="message">Message</string>
     <string name="add">Add</string>
     <string name="destination_hint">Enter your destination here</string>
+    <string name="my_trips">My Trips</string>
 
 </resources>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_margin="@dimen/_8sdp"
+        android:id="@+id/destination"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="My trip destination"
+        android:layout_toLeftOf="@id/delete"
+        android:layout_toStartOf="@id/delete" />
+
+    <Button
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/delete"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/_12sdp" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="2020-12-12 23:59"
+        android:textColor="@color/dialog_marker_delete_bg"
+        android:layout_below="@id/destination"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginLeft="@dimen/_4sdp" />
+
+</RelativeLayout>

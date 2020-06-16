@@ -6,6 +6,11 @@
         android:id="@+id/profil"
         android:title="@string/profil" />
     <item
+        android:id="@+id/my_trips"
+        android:title="@string/my_trips"
+        />
+    <item
         android:id="@+id/logout"
         android:title="@string/logout" />
+
 </menu>
