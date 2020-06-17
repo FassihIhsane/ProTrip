@@ -40,14 +40,14 @@
             android:visibility="visible"/>
 
         <ImageButton
-            android:id="@+id/message"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="@dimen/_24sdp"
-            android:background="@null"
-            android:textSize="@dimen/_14sdp"
-            android:src="@drawable/ic_message"
-            android:visibility="gone"/>
+        android:id="@+id/message"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="@dimen/_24sdp"
+        android:background="@null"
+        android:textSize="@dimen/_14sdp"
+        android:src="@drawable/ic_message"
+        android:visibility="gone"/>
 
         <ImageButton
             android:id="@+id/update"
