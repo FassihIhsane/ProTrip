@@ -328,6 +328,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void sendMessage() {
 
         // TODO send message
+        String userId = mTrip.getUserId();
+        Intent intent = new Intent(this, ChatActivity.class);
+        intent.putExtra("userId", userId);
+        startActivity(intent);
     }
 
     private void deleteTrip() {
