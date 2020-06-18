@@ -15,7 +15,10 @@
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -37,8 +40,8 @@
             android:drawableLeft="@drawable/ic_mail"
             android:drawablePadding="16dp"
             android:hint="@string/login"
-            android:inputType="textEmailAddress"
-            android:importantForAutofill="no" />
+            android:importantForAutofill="no"
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -49,9 +52,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.495"
-        app:passwordToggleEnabled="true"
-        >
+        app:layout_constraintVertical_bias="0.546"
+        app:passwordToggleEnabled="true">
 
         <EditText
             android:id="@+id/password"
@@ -61,7 +63,10 @@
             android:drawableLeft="@drawable/ic_password"
             android:drawablePadding="16dp"
             android:hint="@string/password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            tools:layout_editor_absoluteX="-2dp"
+            tools:layout_editor_absoluteY="376dp"
+            android:autofillHints="no"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -78,7 +83,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
         app:layout_constraintVertical_bias="0.249" />
-
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyle"
