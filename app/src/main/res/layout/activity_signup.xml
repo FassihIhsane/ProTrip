@@ -10,17 +10,17 @@
         android:id="@+id/materialTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginLeft="@dimen/_10sdp"
         android:text="@string/welcome"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/_40sdp"
         app:layout_constraintBottom_toTopOf="@+id/materialTextView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        android:layout_marginStart="@dimen/_10sdp">
+        app:layout_constraintVertical_bias="0.946">
 
     </com.google.android.material.textview.MaterialTextView>
 
@@ -28,17 +28,17 @@
         android:id="@+id/materialTextView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginTop="200dp"
         android:text="@string/start"
         android:textSize="@dimen/_14sdp"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.125"
-        android:layout_marginStart="@dimen/_10sdp">
+        app:layout_constraintVertical_bias="0.008">
 
     </com.google.android.material.textview.MaterialTextView>
 
