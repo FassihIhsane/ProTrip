@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.protrip.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class FirstLunchActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -26,6 +28,7 @@ public class FirstLunchActivity extends AppCompatActivity implements View.OnClic
         register= findViewById(R.id.btn_signup);
         login.setOnClickListener(this);
         register.setOnClickListener(this);
+
     }
 
     @Override
@@ -33,11 +36,13 @@ public class FirstLunchActivity extends AppCompatActivity implements View.OnClic
         switch (v.getId()) {
 
             case R.id.btn_login:
-                startActivity(new Intent(this,LoginActivity.class) );
+                startActivity(new Intent(this,LoginActivity.class));
+                finish();
                 break;
 
             case R.id.btn_signup:
                 startActivity(new Intent(this,SignupActivity.class) );
+                finish();
                 break;
 
         }

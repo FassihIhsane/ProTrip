@@ -9,5 +9,17 @@
     <string name="welcome">WELCOME,</string>
     <string name="start">Sign up to start your adventure</string>
     <string name="email">Email</string>
+    <string name="profil">Profil</string>
+    <string name="logout">Logout</string>
+    <string name="save">Save</string>
+    <string name="title_activity_maps">Home</string>
+    <string name="title_activity_maps2">Map</string>
+    <string name="register">Don\'t have account? Signup</string>
+    <string name="delete">Delete</string>
+    <string name="message">Message</string>
+    <string name="add">Add</string>
+    <string name="destination_hint">Enter your destination here</string>
+    <string name="my_trips">My Trips</string>
+    <string name="hint_send_msg">Double click to send message!</string>
 
 </resources>
