@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#286793</color>
     <color name="colorAccent">#D81B60</color>
     <color name="white">#ffff</color>
+    <color name="grey">#C0BCBC</color>
 
     <!-- dialog marker colors -->
     <color name="dialog_marker_delete_bg">#F30000</color>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <TextView
+        android:id="@+id/conversation_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Ihsane"
+        android:padding="@dimen/_4sdp"/>
+
+    <TextView
+        android:id="@+id/last_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="last message"
+        android:layout_below="@id/conversation_name"
+        android:padding="@dimen/_4sdp"/>
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="2020"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:padding="@dimen/_4sdp"/>
+
+
+</RelativeLayout>

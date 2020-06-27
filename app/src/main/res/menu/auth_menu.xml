@@ -10,6 +10,9 @@
         android:title="@string/my_trips"
         />
     <item
+        android:id="@+id/conversation"
+        android:title="@string/conversation" />
+    <item
         android:id="@+id/logout"
         android:title="@string/logout" />
 

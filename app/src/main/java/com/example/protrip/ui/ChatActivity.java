@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import com.example.protrip.adapters.MessageViewHolder;
+import com.example.protrip.data.Conversation;
 import com.example.protrip.data.Message;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -28,6 +29,7 @@ import com.example.protrip.util.DB;
 import com.firebase.ui.common.ChangeEventType;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,7 +46,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private RecyclerView messagesRV;
     private EditText inputMessage;
-    private String senderId, receiverId, conversationId;
+    private String senderId, receiverId, conversationId, myName, receiverName;
 
     private FirebaseRecyclerAdapter<Message, MessageViewHolder> firebaseRecyclerAdapter;
     private Query mQueryCurrent;
@@ -145,6 +147,7 @@ public class ChatActivity extends AppCompatActivity {
                             .addOnSuccessListener(aVoid -> {
 
                                 inputMessage.setText(""); // Clear message field
+                                refreshConversation(message.substring(0,10));
                             });
 
                 }else {
@@ -152,31 +155,33 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         }));
+    }
 
-        /*inputMessage.setOnClickListener(v ->{
+    private void refreshConversation(String msg) {
 
-            final String message = inputMessage.getText().toString();
+        // Refreshing my conversation
+        final Conversation conversation = new Conversation(receiverId, receiverName, msg);
+        final String myId = DB.getUserId();
+        DB.getReference(Constant.CONVERSATION)
+          .child(myId)
+          .child(receiverId)
+          .setValue(conversation)
+          .addOnSuccessListener(aVoid -> {
 
-            if(!TextUtils.isEmpty(message)){
+              // Refresh receiver's conversation
+              conversation.setId(myId);
+              conversation.setName(myName);
+              DB.getReference(Constant.CONVERSATION)
+                .child(receiverId)
+                .child(myId)
+                .setValue(conversation);
 
-                Message m = new Message(message, senderId, receiverId);
-                DB.getReference(Constant.CHAT)
-                  .child(conversationId)
-                  .push()
-                  .setValue(m)
-                  .addOnSuccessListener(aVoid -> {
-
-                      inputMessage.setText(""); // Clear message field
-                  });
-
-            }else {
-                Toast.makeText(this, "Message cannot be empty!", Toast.LENGTH_SHORT).show();
-            }
-        });*/
+          });
     }
 
     private void fetchUserName(String userId) {
 
+        // Getting receiver's name
         DB.getReference(Constant.USERS)
           .child(userId)
           .addValueEventListener(new ValueEventListener() {
@@ -185,17 +190,33 @@ public class ChatActivity extends AppCompatActivity {
 
                   User user = dataSnapshot.getValue(User.class);
                   if(user != null){
-                      setTitle(user.getFullName());
+                      receiverName = user.getFullName();
+                      setTitle(receiverName);
                   }else{
                       setTitle("Unknown");
                   }
               }
 
               @Override
-              public void onCancelled(@NonNull DatabaseError databaseError) {
-
-              }
+              public void onCancelled(@NonNull DatabaseError databaseError) {}
           });
+
+        // Getting logged user's name
+        DB.getReference(Constant.USERS)
+        .child(DB.getUserId())
+        .addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                User user = dataSnapshot.getValue(User.class);
+                if(user != null){
+                    myName = user.getFullName();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
     }
 
     private void initUI() {
@@ -208,7 +229,7 @@ public class ChatActivity extends AppCompatActivity {
         inputMessage = findViewById(R.id.input_message);
 
         senderId = DB.getUserId();
-        receiverId = getIntent().getStringExtra("userId");
+        receiverId = getIntent().getStringExtra(Constant.USERID_INTENT);
         conversationId = (senderId.compareTo(receiverId) > 0) ? senderId.concat(receiverId) : receiverId.concat(senderId);
     }
 }

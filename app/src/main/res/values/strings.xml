@@ -21,5 +21,6 @@
     <string name="destination_hint">Enter your destination here</string>
     <string name="my_trips">My Trips</string>
     <string name="hint_send_msg">Double click to send message!</string>
+    <string name="conversation">Conversation</string>
 
 </resources>
