@@ -98,6 +98,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.my_trips:
                 launchActivity(MyTripsActivity.class);
                 return true;
+            case R.id.conversation:
+                launchActivity(ConversationActivity.class);
+                return true;
             default:
                 return super.onContextItemSelected(item);
         }

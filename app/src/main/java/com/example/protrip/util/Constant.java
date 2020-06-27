@@ -10,4 +10,6 @@ public interface Constant {
     String USERS = "Users";
     String TRIPS = "Trips";
     String CHAT = "Chats";
+    String CONVERSATION = "Conversations";
+    String USERID_INTENT = "userId";
 }
