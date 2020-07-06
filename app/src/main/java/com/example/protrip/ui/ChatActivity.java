@@ -40,6 +40,7 @@ import com.pedromassango.doubleclick.DoubleClickListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class ChatActivity extends AppCompatActivity {
@@ -47,6 +48,9 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView messagesRV;
     private EditText inputMessage;
     private String senderId, receiverId, conversationId, myName, receiverName;
+    public static final int MSG_TYPE_RIGHT = 1;
+    public static final int MSG_TYPE_LEFT = 0;
+
 
     private FirebaseRecyclerAdapter<Message, MessageViewHolder> firebaseRecyclerAdapter;
     private Query mQueryCurrent;
@@ -71,11 +75,21 @@ public class ChatActivity extends AppCompatActivity {
             @NonNull
             @Override
             public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-                return new MessageViewHolder(
+                if (viewType == MSG_TYPE_RIGHT) {
+                /*return new MessageViewHolder(
                         LayoutInflater.from(parent.getContext())
                                 .inflate(R.layout.message_item, parent, false)
-                );
+                );*/
+                    return new MessageViewHolder(
+                            LayoutInflater.from(parent.getContext())
+                                    .inflate(R.layout.chat_item_right, parent, false)
+                    );
+                } else {
+                    return new MessageViewHolder(
+                            LayoutInflater.from(parent.getContext())
+                                    .inflate(R.layout.chat_item_left, parent, false)
+                    );
+                }
             }
 
             @Override
@@ -85,10 +99,20 @@ public class ChatActivity extends AppCompatActivity {
                 String date = new SimpleDateFormat(Constant.DATE_FORMAT, Locale.getDefault()).format(new Date(message.getDate()));
                 messageViewHolder.dateMessage.setText(date);
                 RelativeLayout holder = messageViewHolder.messageHolder;
-                holder.setBackgroundColor(
+                /*holder.setBackgroundColor(
                         message.getSenderId().equals(senderId) ? Color.parseColor(Constant.PRIMARY_COLOR) : Color.GRAY
                 );
-                holder.setGravity(getMatchedGravity(senderId));
+                holder.setGravity(getMatchedGravity(senderId));*/
+            }
+
+            @Override
+            public int getItemViewType(int position) {
+                Message message = getItem(position);
+                if(message.getSenderId().equals(DB.getUserId())) {
+                    return MSG_TYPE_RIGHT;
+                }else {
+                    return MSG_TYPE_LEFT;
+                }
             }
         };
 
@@ -147,7 +171,7 @@ public class ChatActivity extends AppCompatActivity {
                             .addOnSuccessListener(aVoid -> {
 
                                 inputMessage.setText(""); // Clear message field
-                                refreshConversation(message.substring(0,10));
+                                refreshConversation(message);
                             });
 
                 }else {
@@ -232,4 +256,6 @@ public class ChatActivity extends AppCompatActivity {
         receiverId = getIntent().getStringExtra(Constant.USERID_INTENT);
         conversationId = (senderId.compareTo(receiverId) > 0) ? senderId.concat(receiverId) : receiverId.concat(senderId);
     }
+
+
 }

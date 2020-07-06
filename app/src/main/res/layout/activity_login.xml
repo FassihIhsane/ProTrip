@@ -14,9 +14,10 @@
         android:src="@drawable/logo_pro"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.463"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.636" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
@@ -25,20 +26,23 @@
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.422">
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:drawableStart="@drawable/ic_mail"
             android:drawableLeft="@drawable/ic_mail"
             android:drawablePadding="16dp"
-            android:hint="@string/login"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
-            android:importantForAutofill="no" />
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+            tools:layout_editor_absoluteX="0dp" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -49,9 +53,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.495"
-        app:passwordToggleEnabled="true"
-        >
+        app:layout_constraintVertical_bias="0.627"
+        app:passwordToggleEnabled="true">
 
         <EditText
             android:id="@+id/password"
@@ -61,6 +64,7 @@
             android:drawableLeft="@drawable/ic_password"
             android:drawablePadding="16dp"
             android:hint="@string/password"
+            android:importantForAutofill="no"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,7 +82,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
         app:layout_constraintVertical_bias="0.249" />
-
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyle"
@@ -104,6 +107,6 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_progress"
-        app:layout_constraintVertical_bias="0.665" />
+        app:layout_constraintVertical_bias="0.228" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
