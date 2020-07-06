@@ -14,8 +14,10 @@
         android:src="@drawable/logo_pro"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.463"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.636" />
         tools:ignore="ContentDescription" />
 
 
@@ -28,20 +30,25 @@
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.422">
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:drawableStart="@drawable/ic_mail"
             android:drawableLeft="@drawable/ic_mail"
             android:drawablePadding="16dp"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+            tools:layout_editor_absoluteX="0dp" />
             android:hint="@string/login"
             android:importantForAutofill="no"
-            android:inputType="textEmailAddress" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -52,7 +59,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.546"
+        app:layout_constraintVertical_bias="0.627"
         app:passwordToggleEnabled="true">
 
         <EditText
@@ -63,7 +70,8 @@
             android:drawableLeft="@drawable/ic_password"
             android:drawablePadding="16dp"
             android:hint="@string/password"
-            android:inputType="textPassword"
+            android:importantForAutofill="no"
+            android:inputType="textPassword" />
             tools:layout_editor_absoluteX="-2dp"
             tools:layout_editor_absoluteY="376dp"
             android:autofillHints="no"/>
@@ -108,6 +116,6 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_progress"
-        app:layout_constraintVertical_bias="0.665" />
+        app:layout_constraintVertical_bias="0.228" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

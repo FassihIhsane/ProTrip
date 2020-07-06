@@ -2,6 +2,7 @@ package com.example.protrip.adapters;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,7 +13,7 @@ import com.example.protrip.R;
 public class TripViewHolder extends RecyclerView.ViewHolder {
 
     public TextView destination, date;
-    public Button delete;
+    public ImageButton delete;
 
     public TripViewHolder(@NonNull View itemView) {
         super(itemView);

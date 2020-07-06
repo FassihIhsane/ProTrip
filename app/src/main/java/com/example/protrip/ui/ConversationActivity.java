@@ -99,7 +99,7 @@ public class ConversationActivity extends AppCompatActivity {
 
         DatabaseReference mDatabase = DB.getReference(Constant.CONVERSATION);
         mQueryCurrent = mDatabase.child(DB.getUserId())
-                .orderByKey();
+                                 .orderByKey();
         mDatabase.keepSynced(true);
     }
 
