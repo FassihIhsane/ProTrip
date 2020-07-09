@@ -8,17 +8,15 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.protrip.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-public class FirstLunchActivity extends AppCompatActivity implements View.OnClickListener {
+public class FirstLaunchActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button login, register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first_lunch);
+        setContentView(R.layout.activity_first_launch);
 
         initUI();
     }

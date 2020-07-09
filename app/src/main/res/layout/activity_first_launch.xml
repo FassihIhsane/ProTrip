@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background2"
-    tools:context=".ui.FirstLunchActivity">
+    android:background="@drawable/background"
+    tools:context=".ui.FirstLaunchActivity">
 
 
     <TextView

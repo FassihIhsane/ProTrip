@@ -76,10 +76,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 if (viewType == MSG_TYPE_RIGHT) {
-                /*return new MessageViewHolder(
-                        LayoutInflater.from(parent.getContext())
-                                .inflate(R.layout.message_item, parent, false)
-                );*/
+
                     return new MessageViewHolder(
                             LayoutInflater.from(parent.getContext())
                                     .inflate(R.layout.chat_item_right, parent, false)
@@ -99,10 +96,7 @@ public class ChatActivity extends AppCompatActivity {
                 String date = new SimpleDateFormat(Constant.DATE_FORMAT, Locale.getDefault()).format(new Date(message.getDate()));
                 messageViewHolder.dateMessage.setText(date);
                 RelativeLayout holder = messageViewHolder.messageHolder;
-                /*holder.setBackgroundColor(
-                        message.getSenderId().equals(senderId) ? Color.parseColor(Constant.PRIMARY_COLOR) : Color.GRAY
-                );
-                holder.setGravity(getMatchedGravity(senderId));*/
+
             }
 
             @Override

@@ -32,4 +32,11 @@ public class DB {
                       .getUid();
     }
 
+    public static String getUserEmail(){
+
+        return Objects.requireNonNull(FirebaseAuth.getInstance()
+                .getCurrentUser())
+                 .getEmail();
+    }
+
 }
