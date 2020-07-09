@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.UserProfile">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_150sdp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_259sdp"
+            android:background="@drawable/nim"
+            android:orientation="vertical" >
+        </ImageView>
+    </RelativeLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:src="@drawable/ic_full_name"
+        android:layout_marginTop="@dimen/_90sdp"
+        android:layout_centerHorizontal="true"
+        />
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_190sdp"
+        android:text="Admin"
+        android:textColor="#000"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        android:background="@color/white"
+
+       />
+    <ImageButton
+        android:id="@+id/n_change"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_190sdp"
+        android:src="@drawable/ic_edit"
+       android:layout_marginLeft="@dimen/_180sdp"
+        android:background="@color/white"
+        android:visibility="gone"
+        />
+</RelativeLayout>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_250sdp"
+    android:layout_centerHorizontal="true"
+    >
+
+    <TextView
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:text="Description"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/_8sdp"
+        android:textColor="#1C435D" />
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_300sdp"
+        android:layout_centerHorizontal="true"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:text="Hello i'm Fassih Ihsane i'm 22, i'm from morocco i would love to travel with a group of people make new friends.   "
+        android:padding="@dimen/_10sdp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#000"
+        android:background="@android:color/transparent"/>
+        <ImageButton
+            android:id="@+id/d_change"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_edit"
+            android:layout_alignParentEnd="true"
+            android:background="@color/white"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"/>
+        </RelativeLayout>
+
+</LinearLayout>
+
+            <Button
+                android:id="@+id/contact_me"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/button_login"
+                android:text="@string/contact_me"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/_450sdp"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone"/>
+
+</RelativeLayout>
