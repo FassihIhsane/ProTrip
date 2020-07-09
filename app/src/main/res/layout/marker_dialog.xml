@@ -26,13 +26,12 @@
         android:weightSum="4">
 
         <ImageButton
-            android:id="@+id/message"
+            android:id="@+id/user_profile"
             android:layout_width="0dp"
             android:layout_height="@dimen/_24sdp"
             android:layout_weight="1"
             android:background="@null"
-            android:src="@drawable/ic_message"
-            android:textSize="@dimen/_14sdp"
+            android:src="@drawable/ic_profile"
             android:visibility="gone" />
 
 

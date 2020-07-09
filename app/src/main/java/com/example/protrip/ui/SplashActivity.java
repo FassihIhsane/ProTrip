@@ -31,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(() -> {
 
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            Class<?> activity = (user != null) ? MapsActivity.class : FirstLunchActivity.class;
+            Class<?> activity = (user != null) ? MapsActivity.class : FirstLaunchActivity.class;
 
             Intent intent = new Intent(SplashActivity.this, activity);
             startActivity(intent);

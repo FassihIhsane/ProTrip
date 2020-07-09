@@ -51,7 +51,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Dialog markerDialog;
     private TextView destination;
     private ProgressBar crudProgress;
-    private ImageButton add , delete, message, update;
+    private ImageButton add , delete, profile, update;
     private Trip mTrip;
     private HashMap<String, Marker> fetchedTrips;
 
@@ -90,7 +90,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.profil:
-                launchActivity(ProfileActivity.class);
+                launchActivity(MyProfile.class);
                 return true;
             case R.id.logout:
                 logout();
@@ -133,8 +133,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 deleteTrip();
                 break;
 
-            case R.id.message :
-                sendMessage();
+            case R.id.user_profile :
+                userProfile();
                 break;
 
             case R.id.update:
@@ -154,7 +154,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void logout() {
         mAuth.signOut();
-        startActivity(new Intent(this,FirstLunchActivity.class));
+        startActivity(new Intent(this, FirstLaunchActivity.class));
         finish();
     }
 
@@ -253,7 +253,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         destination =markerDialog.findViewById(R.id.destination);
         add = markerDialog.findViewById(R.id.add);
         delete = markerDialog.findViewById(R.id.delete);
-        message = markerDialog.findViewById(R.id.message);
+        profile = markerDialog.findViewById(R.id.user_profile);
         update = markerDialog.findViewById(R.id.update);
         crudProgress = markerDialog.findViewById(R.id.crud_progress);
         mMarker = marker;
@@ -263,7 +263,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         add.setOnClickListener(this);
         delete.setOnClickListener(this);
-        message.setOnClickListener(this);
+        profile.setOnClickListener(this);
         update.setOnClickListener(this);
         markerDialog.setOnDismissListener(this);
         destination.setText(marker.getTitle());     // Set destination of the trip to EditText
@@ -281,15 +281,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 delete.setVisibility(View.GONE);
                 add.setVisibility(View.GONE);
                 update.setVisibility(View.GONE);
-                message.setVisibility(View.VISIBLE);
+                profile.setVisibility(View.VISIBLE);
                 destination.setEnabled(false);
-                message.setLayoutParams(getSingleParam(4.0f));
+                profile.setLayoutParams(getSingleParam(4.0f));
 
             }else{
 
                 add.setVisibility(View.GONE);
                 update.setVisibility(View.VISIBLE);
-                message.setVisibility(View.GONE);
+                profile.setVisibility(View.GONE);
 
                 LinearLayout.LayoutParams param = getSingleParam(2.0f);
                 delete.setLayoutParams(param);
@@ -328,11 +328,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-    private void sendMessage() {
+    private void userProfile() {
 
-        // TODO send message
+
         String userId = mTrip.getUserId();
-        Intent intent = new Intent(this, ChatActivity.class);
+        Intent intent = new Intent(this, UserProfile.class);
         intent.putExtra("userId", userId);
         startActivity(intent);
     }
