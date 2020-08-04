@@ -79,7 +79,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void loginUser(String email, String password) {
 
-        //Log.d(TAG, "email:"+email+" | password:password");
         toggleLogin();
 
         mAuth.signInWithEmailAndPassword(email, password)
@@ -87,18 +86,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        //Log.d(TAG, task.getException().getMessage());
-
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                           // Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             startActivity(new Intent(LoginActivity.this, MapsActivity.class));
                             finish();
-                            //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
-                            //Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                             toggleLogin();
                         }

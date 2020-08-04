@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import com.example.protrip.data.Trip;
 import com.example.protrip.data.User;
 import com.example.protrip.util.Constant;
 import com.example.protrip.util.DB;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,13 +25,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserProfile extends AppCompatActivity implements View.OnClickListener {
 
     private Button message;
     private TextView userName, description;
     private ImageButton updateName, updateDescription;
+    CircleImageView imageProfile;
 
+    private StorageReference mStorageRef;
 
     private String userId;
 
@@ -74,9 +83,19 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
         userName = findViewById(R.id.user_name);
         description = findViewById(R.id.description);
         message = findViewById(R.id.contact_me);
+        imageProfile = findViewById(R.id.image_profile);
 
         message.setOnClickListener(this);
         userId = getIntent().getStringExtra(Constant.USERID_INTENT);
+
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference storageReference = mStorageRef.child("users/"+userId+"/profile.jpg");
+        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(imageProfile);
+            }
+        });
 
     }
 

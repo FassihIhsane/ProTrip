@@ -25,5 +25,7 @@
     <string name="admin_gmail_com">admin@gmail.com</string>
     <string name="_2127_07_19_39_30">+2127 07 19 39 30</string>
     <string name="contact_me">Contact me</string>
+    <string name="description">Description</string>
+    <string name="describe_yourself">Describe yourself</string>
 
 </resources>

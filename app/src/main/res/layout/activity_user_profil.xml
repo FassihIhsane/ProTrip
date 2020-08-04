@@ -8,63 +8,78 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_150sdp">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_259sdp"
-            android:background="@drawable/nim"
-            android:orientation="vertical" >
-        </ImageView>
+        android:layout_height="@dimen/_150sdp"
+        android:background="@drawable/nim">
     </RelativeLayout>
-
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/image_profile"
         android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_100sdp"
-        android:src="@drawable/ic_full_name"
+        android:src="@mipmap/ic_launcher_round"
         android:layout_marginTop="@dimen/_90sdp"
         android:layout_centerHorizontal="true"
         />
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <EditText
-        android:id="@+id/user_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/_190sdp"
-        android:text="Admin"
-        android:textColor="#000"
-        android:textSize="21sp"
-        android:textStyle="bold"
-        android:background="@color/white"
-
-       />
     <ImageButton
-        android:id="@+id/n_change"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_190sdp"
-        android:src="@drawable/ic_edit"
-       android:layout_marginLeft="@dimen/_180sdp"
-        android:background="@color/white"
+        android:id="@+id/i_change"
+        android:layout_width="@dimen/_35sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_marginStart="@dimen/_165sdp"
+        android:layout_marginLeft="@dimen/_165sdp"
+        android:layout_marginTop="@dimen/_155sdp"
+        android:background="@drawable/add_picture"
+        android:src="@drawable/ic_photo_add"
         android:visibility="gone"
-        />
-</RelativeLayout>
-<LinearLayout
+        tools:ignore="ContentDescription"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_190sdp"
+            android:background="@color/white"
+            tools:text="Admin"
+            android:textColor="#000"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            android:autofillHints=""
+            android:inputType="text"
+            tools:ignore="LabelFor" />
+
+        <ImageButton
+            android:id="@+id/n_change"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="@dimen/_30sdp"
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_190sdp"
+            android:background="@color/white"
+            android:src="@drawable/ic_edit"
+            android:visibility="gone"
+            tools:ignore="ContentDescription" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_250sdp"
+    android:layout_marginTop="@dimen/_230sdp"
     android:layout_centerHorizontal="true"
     >
 
     <TextView
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_30sdp"
-        android:text="Description"
+        android:text="@string/description"
         android:gravity="center_horizontal"
         android:padding="@dimen/_8sdp"
         android:textColor="#1C435D" />
@@ -72,23 +87,27 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_300sdp"
+        android:layout_marginTop="@dimen/_280sdp"
         android:layout_centerHorizontal="true"
         >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
-    <EditText
-        android:id="@+id/description"
-        android:layout_width="@dimen/_250sdp"
-        android:layout_height="@dimen/_100sdp"
-        android:text="Hello i'm Fassih Ihsane i'm 22, i'm from morocco i would love to travel with a group of people make new friends.   "
-        android:padding="@dimen/_10sdp"
-        android:layout_centerHorizontal="true"
-        android:textColor="#000"
-        android:background="@android:color/transparent"/>
-        <ImageButton
+            android:background="@color/white"
+            tools:ignore="UselessParent">
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="@dimen/_250sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:background="@android:color/transparent"
+                android:hint="@string/describe_yourself"
+                android:gravity="center"
+                android:textSize="@dimen/_14sdp"
+                android:textColor="#000"
+                android:importantForAutofill="no"/>
+
+            <ImageButton
             android:id="@+id/d_change"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
@@ -97,21 +116,24 @@
             android:layout_alignParentEnd="true"
             android:background="@color/white"
             android:layout_alignParentRight="true"
-            android:visibility="gone"/>
+            android:visibility="gone"
+                tools:ignore="ContentDescription" />
         </RelativeLayout>
+
 
 </LinearLayout>
 
-            <Button
-                android:id="@+id/contact_me"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@drawable/button_login"
-                android:text="@string/contact_me"
-                android:textColor="@color/white"
-                android:layout_marginTop="@dimen/_450sdp"
-                android:layout_centerHorizontal="true"
-                android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/contact_me"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:background="@drawable/button_login"
+        android:text="@string/contact_me"
+        android:textColor="@color/white"
+        android:layout_marginBottom="@dimen/_80sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone" />
 
 </RelativeLayout>
