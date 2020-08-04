@@ -21,7 +21,7 @@
             android:layout_toEndOf="@+id/avatar"
             android:layout_toRightOf="@+id/avatar"
             android:textColor="#FBFBFB"
-            android:textSize="@dimen/_15sdp"
+            android:textSize="@dimen/_13sdp"
             android:textStyle="bold"
             tools:text="Ihsane" />
 

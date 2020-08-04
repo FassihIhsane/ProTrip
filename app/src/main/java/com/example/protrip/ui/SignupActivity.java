@@ -75,7 +75,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         boolean isValid = validateInput(fullName,email,password);
         if(isValid){
             toggleSignup();
-            User usr = new User(email, fullName, null,null);
+            User usr = new User(email, fullName,null);
             usr.setPassword(password);
             createAccount(usr);
         }
