@@ -1,6 +1,7 @@
 package com.example.protrip.data;
 
 import java.util.Date;
+import java.util.List;
 
 public class Message {
 

@@ -1,5 +1,6 @@
 package com.example.protrip.adapters;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -9,11 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.protrip.R;
+import com.example.protrip.data.Message;
+
+import java.security.PublicKey;
+import java.util.List;
 
 public class MessageViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView messageText, dateMessage;
+    public TextView messageText, dateMessage, seen;
     public RelativeLayout messageHolder;
+
 
     public MessageViewHolder(@NonNull View itemView) {
         super(itemView);

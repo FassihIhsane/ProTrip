@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final String TAG = "LoginActivityTag";
     private Button loginBtn;
     private EditText emailET,passwordET;
-    private TextView signup;
+    private TextView signup, forgotPassword;
     private ProgressBar loginProgress;
 
     private FirebaseAuth mAuth;
@@ -43,8 +43,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         emailET = findViewById(R.id.email);
         passwordET = findViewById(R.id.password);
         loginProgress = findViewById(R.id.login_progress);
+        forgotPassword = findViewById(R.id.forgot);
         loginBtn.setOnClickListener(this);
-
+        forgotPassword.setOnClickListener(this);
         signup = findViewById(R.id.signup);
         signup.setOnClickListener(this);
 
@@ -69,7 +70,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 showSignup();
                 break;
 
+            case R.id.forgot:
+                showResetPassword();
+                break;
+
         }
+    }
+
+    private void showResetPassword() {
+        startActivity(new Intent(this, ResetPasswordActivity.class));
+        finish();
     }
 
     private void showSignup() {

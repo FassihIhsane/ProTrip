@@ -1,12 +1,10 @@
 package com.example.protrip.ui;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import com.example.protrip.adapters.MessageViewHolder;
@@ -18,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -29,7 +26,6 @@ import com.example.protrip.util.DB;
 import com.firebase.ui.common.ChangeEventType;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +38,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -50,6 +47,8 @@ public class ChatActivity extends AppCompatActivity {
     private String senderId, receiverId, conversationId, myName, receiverName;
     public static final int MSG_TYPE_RIGHT = 1;
     public static final int MSG_TYPE_LEFT = 0;
+
+    ValueEventListener seenListener;
 
 
     private FirebaseRecyclerAdapter<Message, MessageViewHolder> firebaseRecyclerAdapter;
@@ -60,10 +59,10 @@ public class ChatActivity extends AppCompatActivity {
         super.onStart();
 
         FirebaseRecyclerOptions<Message> options = new FirebaseRecyclerOptions.Builder<Message>()
-                                                                              .setQuery(mQueryCurrent, Message.class)
-                                                                              .build();
+                .setQuery(mQueryCurrent, Message.class)
+                .build();
 
-        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Message, MessageViewHolder>(options){
+        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Message, MessageViewHolder>(options) {
 
             @Override
             public void onChildChanged(@NonNull ChangeEventType type, @NonNull DataSnapshot snapshot, int newIndex, int oldIndex) {
@@ -96,15 +95,15 @@ public class ChatActivity extends AppCompatActivity {
                 String date = new SimpleDateFormat(Constant.DATE_FORMAT, Locale.getDefault()).format(new Date(message.getDate()));
                 messageViewHolder.dateMessage.setText(date);
                 RelativeLayout holder = messageViewHolder.messageHolder;
-
             }
+
 
             @Override
             public int getItemViewType(int position) {
                 Message message = getItem(position);
-                if(message.getSenderId().equals(DB.getUserId())) {
+                if (message.getSenderId().equals(DB.getUserId())) {
                     return MSG_TYPE_RIGHT;
-                }else {
+                } else {
                     return MSG_TYPE_LEFT;
                 }
             }
@@ -250,6 +249,5 @@ public class ChatActivity extends AppCompatActivity {
         receiverId = getIntent().getStringExtra(Constant.USERID_INTENT);
         conversationId = (senderId.compareTo(receiverId) > 0) ? senderId.concat(receiverId) : receiverId.concat(senderId);
     }
-
 
 }

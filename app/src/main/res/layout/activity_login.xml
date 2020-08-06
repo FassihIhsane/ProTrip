@@ -45,8 +45,6 @@
             android:inputType="textEmailAddress"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
             tools:layout_editor_absoluteX="0dp" />
-            android:hint="@string/login"
-            android:importantForAutofill="no"
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,6 +73,19 @@
             tools:layout_editor_absoluteY="376dp"
             android:autofillHints="no"/>
     </com.google.android.material.textfield.TextInputLayout>
+
+
+    <TextView
+        android:id="@+id/forgot"
+        android:layout_width="122dp"
+        android:layout_height="21dp"
+        android:text="@string/forgot_password"
+        app:layout_constraintBottom_toTopOf="@+id/btn_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.975"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+        app:layout_constraintVertical_bias="0.517" />
 
     <Button
         android:id="@+id/btn_login"
@@ -116,5 +127,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_progress"
         app:layout_constraintVertical_bias="0.228" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
