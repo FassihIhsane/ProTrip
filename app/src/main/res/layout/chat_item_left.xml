@@ -26,8 +26,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/message_text"
             android:textColor="@color/white"
-            android:padding="@dimen/_4sdp"
-            android:text="2020"/>
+            android:paddingLeft="@dimen/_4sdp"
+            android:paddingBottom="@dimen/_4sdp"
+            android:text="@string/_2020"
+            android:paddingStart="@dimen/_4sdp" />
 
     </RelativeLayout>
+
     </RelativeLayout>

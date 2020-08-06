@@ -27,5 +27,12 @@
     <string name="contact_me">Contact me</string>
     <string name="description">Description</string>
     <string name="describe_yourself">Describe yourself</string>
+    <string name="_2020">2020</string>
+    <string name="seen">Seen</string>
+    <string name="forgot_password">Forgot password !</string>
+    <string name="reset">Reset</string>
+    <string name="cancel">Cancel</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="click_on">Enter your email, and click on reset, you will receive an email to reset your password</string>
 
 </resources>

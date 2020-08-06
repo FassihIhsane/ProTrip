@@ -8,6 +8,7 @@
 
 
         <RelativeLayout
+            android:id="@+id/view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/background_right"
@@ -29,6 +30,8 @@
             android:padding="@dimen/_4sdp"
             android:textColor="@color/white"
             android:layout_below="@id/message_text"
-            android:text="2020" />
+            android:text="@string/_2020" />
+
         </RelativeLayout>
+
     </RelativeLayout>
