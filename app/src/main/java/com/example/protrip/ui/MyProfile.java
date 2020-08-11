@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.example.protrip.R;
@@ -36,11 +37,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyProfile extends AppCompatActivity implements View.OnClickListener {
 
-    private Button message;
-    private TextView userName, description;
-    private ImageButton updateName,updateDescription, updatePicture;
+    private TextView userName, description,tel,age,mail;
+    private ImageButton updateName,updateDescription, updatePicture, message,back;
     CircleImageView imageProfile;
-
+    private Toolbar toolbar;
     private StorageReference mStorageRef;
 
     @Override
@@ -62,6 +62,9 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
                         if (usr != null ) {
                             userName.setText(usr.getFullName());
                             description.setText(usr.getDescription());
+                            mail.setText(usr.getEmail());
+                            age.setText(usr.getAge());
+                            tel.setText(usr.getTel());
                             updateDescription.setVisibility(View.VISIBLE);
                             updateName.setVisibility(View.VISIBLE);
                             updatePicture.setVisibility(View.VISIBLE);
@@ -81,17 +84,23 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
 
         userName = findViewById(R.id.user_name);
         description = findViewById(R.id.description);
+        tel = findViewById(R.id.tel_text);
+        mail = findViewById(R.id.mail_text);
+        age = findViewById(R.id.age_text);
+
         message = findViewById(R.id.contact_me);
         updateName = findViewById(R.id.n_change);
         updateDescription = findViewById(R.id.d_change);
         imageProfile = findViewById(R.id.image_profile);
         updatePicture = findViewById(R.id.i_change);
-
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        back = findViewById(R.id.back_btn);
+        back.setOnClickListener(this);
         message.setOnClickListener(this);
         updateName.setOnClickListener(this);
         updateDescription.setOnClickListener(this);
         updatePicture.setOnClickListener(this);
-
         mStorageRef = FirebaseStorage.getInstance().getReference();
         StorageReference storageReference = mStorageRef.child("users/"+DB.getUserId()+"/profile.jpg");
         storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -117,6 +126,9 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
                 break;
             case R.id.i_change :
                 openGallery();
+                break;
+            case R.id.back_btn:
+                startActivity(new Intent(MyProfile.this,MapsActivity.class));
                 break;
     }
 }
@@ -163,8 +175,10 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
     private void updateDescription() {
         String desc = description.getText().toString();
         String fullName = userName.getText().toString();
+        String phone = tel.getText().toString();
+        String ageStr = age.getText().toString();
         // Construct user
-        User usr = new User(DB.getUserEmail(), fullName,desc);
+        User usr = new User(DB.getUserEmail(), fullName,desc,phone,ageStr);
         DB.getReference(Constant.USERS).child(DB.getUserId())
                 .setValue(usr)
                 .addOnCompleteListener(task -> {
@@ -178,9 +192,11 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
     private void updateName() {
         String desc = description.getText().toString();
         String fullName = userName.getText().toString();
+        String phone = tel.getText().toString();
+        String ageStr = age.getText().toString();
 
         // Construct user
-        User usr = new User(DB.getUserEmail(),fullName,desc);
+        User usr = new User(DB.getUserEmail(),fullName,desc,phone,ageStr);
 
         DB.getReference(Constant.USERS).child(DB.getUserId())
                 .setValue(usr)

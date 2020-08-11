@@ -20,6 +20,8 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
+import java.util.Objects;
+
 public class MyTripsActivity extends AppCompatActivity  {
 
     private RecyclerView myTripsRV;
@@ -69,6 +71,8 @@ public class MyTripsActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_trips);
+        setTitle(Constant.TRIPS);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         initViews();
         initFirebase();

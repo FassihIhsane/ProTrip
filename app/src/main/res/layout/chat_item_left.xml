@@ -2,7 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" 
     android:layout_width="@dimen/_200sdp"
-    android:padding="@dimen/_8sdp"
+    android:padding="@dimen/_4sdp"
     android:layout_height="wrap_content">
 
 
@@ -16,7 +16,10 @@
             android:id="@+id/message_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_4sdp"
+            android:paddingTop="@dimen/_4sdp"
+            android:paddingLeft="@dimen/_4sdp"
+            android:paddingRight="@dimen/_4sdp"
+            android:paddingBottom="@dimen/_2sdp"
             android:text="@string/message"
             android:textColor="@color/white" />
 
@@ -27,6 +30,7 @@
             android:layout_below="@id/message_text"
             android:textColor="@color/white"
             android:paddingLeft="@dimen/_4sdp"
+            android:paddingRight="@dimen/_4sdp"
             android:paddingBottom="@dimen/_4sdp"
             android:text="@string/_2020"
             android:paddingStart="@dimen/_4sdp" />
