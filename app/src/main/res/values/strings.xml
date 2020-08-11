@@ -34,5 +34,11 @@
     <string name="cancel">Cancel</string>
     <string name="enter_your_email">Enter your email</string>
     <string name="click_on">Enter your email, and click on reset, you will receive an email to reset your password</string>
+    <string name="profile">Profile</string>
+    <string name="about">About</string>
+    <string name="admin_mail_com">admin@mail.com</string>
+    <string name="_2120707193930">+2120707193930</string>
+    <string name="phone_number">Phone number</string>
+    <string name="age">Age</string>
 
 </resources>

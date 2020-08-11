@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e6e6e6"
+    android:background="@drawable/chat_background"
     tools:context=".ui.ChatActivity">
 
 
@@ -17,9 +17,9 @@
     <RelativeLayout
         android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="55dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
+        android:background="@drawable/background_chat_edit_text"
         android:padding="@dimen/_8sdp">
 
         <EditText

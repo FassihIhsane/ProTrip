@@ -28,7 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText fullNameET, passwordET, emailET;
+    private EditText fullNameET, passwordET, emailET,ageET,telET;
     private Button registerBtn;
     private ProgressBar signupProgress;
 
@@ -50,6 +50,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         fullNameET = findViewById(R.id.full_name);
         passwordET = findViewById(R.id.password);
         emailET = findViewById(R.id.email);
+        ageET = findViewById(R.id.age);
+        telET = findViewById(R.id.tel);
         registerBtn = findViewById(R.id.btn_register);
         registerBtn.setOnClickListener(this);
         signupProgress = findViewById(R.id.signup_progress);
@@ -71,17 +73,19 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private void signupUser() {
         String fullName = fullNameET.getText().toString();
         String email = emailET.getText().toString();
+        String phone = telET.getText().toString();
+        String age = ageET.getText().toString();
         String password = passwordET.getText().toString();
-        boolean isValid = validateInput(fullName,email,password);
+        boolean isValid = validateInput(fullName,email,password,phone,age);
         if(isValid){
             toggleSignup();
-            User usr = new User(email, fullName,null);
+            User usr = new User(email, fullName,null,phone,age);
             usr.setPassword(password);
             createAccount(usr);
         }
     }
 
-    private boolean validateInput(String fullName, String email, String password) {
+    private boolean validateInput(String fullName, String email, String password,String tel, String age) {
 
         boolean isValid = true;
 
@@ -98,6 +102,17 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         if(password.length() < 6) {
             passwordET.setError("At least 6 characters");
             isValid = false;
+        }
+
+        if(!tel.trim().matches("^[+][0-9]{10,13}$")){
+            telET.setError("Invalid phone number");
+            isValid = false;
+        }
+
+        if(!age.trim().matches("^(?:1[01][0-9]|50|1[7-9]|[2-5][0-5])$")){
+            ageET.setError("Invalid age");
+            isValid = false;
+
         }
 
         return isValid;

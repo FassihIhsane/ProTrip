@@ -2,6 +2,7 @@ package com.example.protrip.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -33,11 +34,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserProfile extends AppCompatActivity implements View.OnClickListener {
 
-    private Button message;
-    private TextView userName, description;
-    private ImageButton updateName, updateDescription;
-    CircleImageView imageProfile;
 
+    private TextView userName, description,age,tel,mail;
+    private ImageButton message,back;
+    CircleImageView imageProfile;
+    private Toolbar toolbar;
     private StorageReference mStorageRef;
 
     private String userId;
@@ -63,6 +64,9 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
                         if (usr != null) {
                             userName.setText(usr.getFullName());
                             description.setText(usr.getDescription());
+                            mail.setText(usr.getEmail());
+                            tel.setText(usr.getTel());
+                            age.setText(usr.getAge());
                             userName.setEnabled(false);
                             description.setEnabled(false);
                             message.setVisibility(View.VISIBLE);
@@ -82,8 +86,15 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
 
         userName = findViewById(R.id.user_name);
         description = findViewById(R.id.description);
+        tel = findViewById(R.id.tel_text);
+        mail = findViewById(R.id.mail_text);
+        age = findViewById(R.id.age_text);
         message = findViewById(R.id.contact_me);
         imageProfile = findViewById(R.id.image_profile);
+        back = findViewById(R.id.back_btn);
+        back.setOnClickListener(this);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         message.setOnClickListener(this);
         userId = getIntent().getStringExtra(Constant.USERID_INTENT);
@@ -105,6 +116,9 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
         switch (v.getId()) {
             case R.id.contact_me:
                 chatProfile();
+                break;
+            case R.id.back_btn:
+                startActivity(new Intent(UserProfile.this,MapsActivity.class));
                 break;
         }
     }

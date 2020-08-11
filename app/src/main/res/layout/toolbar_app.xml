@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_40sdp"
+    android:background="@drawable/nim"
+    android:elevation="@dimen/_4sdp"
+    >
+    <ImageButton
+        android:id="@+id/back_btn"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@null"
+        android:src="@drawable/ic_back" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/_60sdp"
+        android:gravity="center"
+        android:text="@string/profile"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_60sdp" />
+
+
+</androidx.appcompat.widget.Toolbar>

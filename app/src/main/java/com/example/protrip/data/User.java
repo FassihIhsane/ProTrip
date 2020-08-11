@@ -2,15 +2,18 @@ package com.example.protrip.data;
 
 public class User {
 
-    private String email, fullName, password, description;
+    private String email, fullName, password, description,tel,age;
 
     public User() {
     }
 
-    public User(String email, String fullName,String description) {
+    public User(String email, String fullName,String description,String tel, String age) {
         this.email = email;
         this.fullName = fullName;
         this.description = description;
+        this.tel = tel;
+        this.age = age;
+
     }
 
     public String getDescription() {
@@ -43,5 +46,21 @@ public class User {
 
     public String getPassword() {
         return this.password;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
     }
 }

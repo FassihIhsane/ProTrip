@@ -13,9 +13,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.ResetPasswordActivity"
@@ -24,9 +24,12 @@
         <activity
             android:name=".ui.UserProfile"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".ui.ConversationActivity" />
-        <activity android:name=".ui.ChatActivity" />
-        <activity android:name=".ui.MyTripsActivity" />
+        <activity android:name=".ui.ConversationActivity"
+            android:parentActivityName=".ui.MapsActivity"/>
+        <activity android:name=".ui.ChatActivity"
+            android:parentActivityName=".ui.ConversationActivity"/>
+        <activity android:name=".ui.MyTripsActivity"
+            android:parentActivityName=".ui.MapsActivity"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -61,13 +64,6 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".ui.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
     </application>
