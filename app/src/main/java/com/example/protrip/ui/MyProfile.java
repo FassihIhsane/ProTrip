@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,11 +38,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyProfile extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView userName, description,tel,age,mail;
-    private ImageButton updateName,updateDescription, updatePicture, message,back;
+    private TextView userName, description, tel, age, mail, status;
+    private ImageButton updateName, updateDescription, updatePicture, message, back;
     CircleImageView imageProfile;
+    private ImageView online,offline;
     private Toolbar toolbar;
     private StorageReference mStorageRef;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,15 +62,25 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         User usr = dataSnapshot.getValue(User.class);
 
-                        if (usr != null ) {
+                        if (usr != null) {
                             userName.setText(usr.getFullName());
                             description.setText(usr.getDescription());
                             mail.setText(usr.getEmail());
-                            age.setText(usr.getAge());
+                            age.setText(usr.getAge()+" years old");
                             tel.setText(usr.getTel());
                             updateDescription.setVisibility(View.VISIBLE);
                             updateName.setVisibility(View.VISIBLE);
                             updatePicture.setVisibility(View.VISIBLE);
+
+                            if(usr.getStatus().equals("online")){
+                                online.setVisibility(View.VISIBLE);
+                                offline.setVisibility(View.GONE);
+                                status.setText(usr.getStatus());
+                            }else{
+                                offline.setVisibility(View.VISIBLE);
+                                online.setVisibility(View.GONE);
+                                status.setText(usr.getStatus());
+                            }
                         }
 
                     }
@@ -87,7 +100,9 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
         tel = findViewById(R.id.tel_text);
         mail = findViewById(R.id.mail_text);
         age = findViewById(R.id.age_text);
-
+        status = findViewById(R.id.status);
+        online = findViewById(R.id.online_button);
+        offline = findViewById(R.id.offline_button);
         message = findViewById(R.id.contact_me);
         updateName = findViewById(R.id.n_change);
         updateDescription = findViewById(R.id.d_change);
@@ -102,7 +117,7 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
         updateDescription.setOnClickListener(this);
         updatePicture.setOnClickListener(this);
         mStorageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference storageReference = mStorageRef.child("users/"+DB.getUserId()+"/profile.jpg");
+        StorageReference storageReference = mStorageRef.child("users/" + DB.getUserId() + "/profile.jpg");
         storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -118,20 +133,20 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.n_change :
+            case R.id.n_change:
                 updateName();
                 break;
-            case R.id.d_change :
+            case R.id.d_change:
                 updateDescription();
                 break;
-            case R.id.i_change :
+            case R.id.i_change:
                 openGallery();
                 break;
             case R.id.back_btn:
-                startActivity(new Intent(MyProfile.this,MapsActivity.class));
+                startActivity(new Intent(MyProfile.this, MapsActivity.class));
                 break;
+        }
     }
-}
 
     private void openGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -142,8 +157,8 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1000){
-            if(resultCode == Activity.RESULT_OK){
+        if (requestCode == 1000) {
+            if (resultCode == Activity.RESULT_OK) {
                 Uri imageUri = data.getData();
                 imageProfile.setImageURI(imageUri);
 
@@ -153,7 +168,7 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
     }
 
     private void uploadImageToFirebase(Uri imageUri) {
-        StorageReference fileReference = mStorageRef.child("users/"+DB.getUserId()+"/profile.jpg");
+        StorageReference fileReference = mStorageRef.child("users/" + DB.getUserId() + "/profile.jpg");
         fileReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -167,7 +182,7 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MyProfile.this,"Failed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyProfile.this, "Failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -178,7 +193,7 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
         String phone = tel.getText().toString();
         String ageStr = age.getText().toString();
         // Construct user
-        User usr = new User(DB.getUserEmail(), fullName,desc,phone,ageStr);
+        User usr = new User(DB.getUserEmail(), fullName, desc, phone, ageStr, "online");
         DB.getReference(Constant.USERS).child(DB.getUserId())
                 .setValue(usr)
                 .addOnCompleteListener(task -> {
@@ -196,15 +211,32 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
         String ageStr = age.getText().toString();
 
         // Construct user
-        User usr = new User(DB.getUserEmail(),fullName,desc,phone,ageStr);
+        User usr = new User(DB.getUserEmail(), fullName, desc, phone, ageStr, "online");
 
         DB.getReference(Constant.USERS).child(DB.getUserId())
                 .setValue(usr)
                 .addOnCompleteListener(task -> {
-                    if(task.isSuccessful()) {
+                    if (task.isSuccessful()) {
                         Toast.makeText(MyProfile.this, "Name updated", Toast.LENGTH_LONG).show();
                     }
                 });
 
+    }
+
+    private void checkOnlineStatus(String status){
+        DatabaseReference setChild = DB.getReference(Constant.USERS).child(DB.getUserId());
+        setChild.child("status").setValue(status);
+    }
+
+    @Override
+    protected void onResume() {
+        checkOnlineStatus("online");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        checkOnlineStatus("offline");
+        super.onPause();
     }
 }

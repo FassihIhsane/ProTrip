@@ -2,6 +2,7 @@ package com.example.protrip.adapters;
 
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
 
     public TextView name, lastMsg, date;
     public CircleImageView avatar;
+
 
 
     public ConversationViewHolder(@NonNull View itemView) {

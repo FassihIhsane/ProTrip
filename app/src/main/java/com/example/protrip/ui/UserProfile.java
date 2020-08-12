@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,8 +36,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class UserProfile extends AppCompatActivity implements View.OnClickListener {
 
 
-    private TextView userName, description,age,tel,mail;
+    private TextView userName, description,age,tel,mail,status;
     private ImageButton message,back;
+    private ImageView online,offline;
     CircleImageView imageProfile;
     private Toolbar toolbar;
     private StorageReference mStorageRef;
@@ -66,10 +68,20 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
                             description.setText(usr.getDescription());
                             mail.setText(usr.getEmail());
                             tel.setText(usr.getTel());
-                            age.setText(usr.getAge());
+                            age.setText(usr.getAge()+" years old");
                             userName.setEnabled(false);
                             description.setEnabled(false);
                             message.setVisibility(View.VISIBLE);
+
+                            if(usr.getStatus().equals("online")){
+                                online.setVisibility(View.VISIBLE);
+                                offline.setVisibility(View.GONE);
+                                status.setText(usr.getStatus());
+                            }else{
+                                offline.setVisibility(View.VISIBLE);
+                                online.setVisibility(View.GONE);
+                                status.setText(usr.getStatus());
+                            }
                         }
 
                     }
@@ -79,6 +91,10 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
 
                     }
                 });
+    }
+    private void checkOnlineStatus(String status){
+       DatabaseReference setChild = DB.getReference(Constant.USERS).child(DB.getUserId());
+       setChild.child("status").setValue(status);
     }
 
 
@@ -91,6 +107,9 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
         age = findViewById(R.id.age_text);
         message = findViewById(R.id.contact_me);
         imageProfile = findViewById(R.id.image_profile);
+        online = findViewById(R.id.online_button);
+        offline = findViewById(R.id.offline_button);
+        status = findViewById(R.id.status);
         back = findViewById(R.id.back_btn);
         back.setOnClickListener(this);
         toolbar = findViewById(R.id.toolbar);
@@ -128,5 +147,17 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
         Intent intent = new Intent(this, ChatActivity.class);
         intent.putExtra("userId", userId);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        checkOnlineStatus("online");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+    checkOnlineStatus("offline");
+        super.onPause();
     }
 }

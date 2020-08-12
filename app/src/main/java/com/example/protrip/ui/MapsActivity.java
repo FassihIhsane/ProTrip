@@ -36,6 +36,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -406,5 +407,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 weight
         );
+    }
+
+    private void checkOnlineStatus(String status){
+        DatabaseReference setChild = DB.getReference(Constant.USERS).child(DB.getUserId());
+        setChild.child("status").setValue(status);
+    }
+
+    @Override
+    protected void onResume() {
+        checkOnlineStatus("online");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        checkOnlineStatus("offline");
+        super.onPause();
     }
 }

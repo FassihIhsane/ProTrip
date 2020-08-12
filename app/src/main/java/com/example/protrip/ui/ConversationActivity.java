@@ -126,4 +126,6 @@ public class ConversationActivity extends AppCompatActivity {
         super.onStop();
         firebaseRecyclerAdapter.stopListening(); // To avoid memory leaks
     }
+
+
 }
