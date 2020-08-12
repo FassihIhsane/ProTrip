@@ -9,8 +9,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.example.protrip.R;
@@ -41,6 +44,7 @@ public class ConversationActivity extends AppCompatActivity {
     private RecyclerView conversationRV;
     private FirebaseRecyclerAdapter<Conversation, ConversationViewHolder> firebaseRecyclerAdapter;
     private Query mQueryCurrent;
+    private EditText searchCvr;
 
     private StorageReference mStorageRef;
 
@@ -66,11 +70,11 @@ public class ConversationActivity extends AppCompatActivity {
 
             @Override
             protected void onBindViewHolder(@NonNull ConversationViewHolder conversationViewHolder, int i, @NonNull Conversation conversation) {
-
+                conversationViewHolder.name.setText(conversation.getName());
                 String date = new SimpleDateFormat(Constant.DATE_FORMAT, Locale.getDefault()).format(new Date(conversation.getDate()));
                 conversationViewHolder.lastMsg.setText(conversation.getLastMessage());
                 conversationViewHolder.date.setText(date);
-                conversationViewHolder.name.setText(conversation.getName());
+
 
                 mStorageRef = FirebaseStorage.getInstance().getReference();
                 StorageReference storageReference = mStorageRef.child("users/"+conversation.getId()+"/profile.jpg");
@@ -103,10 +107,81 @@ public class ConversationActivity extends AppCompatActivity {
 
         initUI();
         initFirebase();
+        onSearch();
+    }
+
+    private void onSearch() {
+        searchCvr.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searchConversation(s.toString());
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+    private void searchConversation(String toString) {
+        if(!searchCvr.getText().toString().equals("")){
+            Query query = DB.getReference(Constant.CONVERSATION).child(DB.getUserId()).orderByChild("name")
+                            .startAt(toString)
+                            .endAt(toString + "\uf8ff");
+            FirebaseRecyclerOptions<Conversation> options = new FirebaseRecyclerOptions.Builder<Conversation>()
+                    .setQuery(query, Conversation.class)
+                    .build();
+
+            firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Conversation, ConversationViewHolder>(options){
+
+                @NonNull
+                @Override
+                public ConversationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+                    return new ConversationViewHolder(
+                            LayoutInflater.from(parent.getContext())
+                                    .inflate(R.layout.conversation_item, parent, false)
+                    );
+                }
+
+                @Override
+                protected void onBindViewHolder(@NonNull ConversationViewHolder conversationViewHolder, int i, @NonNull Conversation conversation) {
+                    conversationViewHolder.name.setText(conversation.getName());
+                    String date = new SimpleDateFormat(Constant.DATE_FORMAT, Locale.getDefault()).format(new Date(conversation.getDate()));
+                    conversationViewHolder.lastMsg.setText(conversation.getLastMessage());
+                    conversationViewHolder.date.setText(date);
+
+
+                    mStorageRef = FirebaseStorage.getInstance().getReference();
+                    StorageReference storageReference = mStorageRef.child("users/"+conversation.getId()+"/profile.jpg");
+                    storageReference.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(conversationViewHolder.avatar));
+
+                    conversationViewHolder.itemView.setOnClickListener(v->{
+
+                        Intent intent = new Intent(ConversationActivity.this, ChatActivity.class);
+                        intent.putExtra(Constant.USERID_INTENT,conversation.getId());
+                        startActivity(intent);
+                    });
+                }
+            };
+
+            conversationRV.setAdapter(firebaseRecyclerAdapter);
+            firebaseRecyclerAdapter.startListening();
+        }else{
+            onStart();
+        }
     }
 
     private void initUI() {
 
+        searchCvr = findViewById(R.id.search_cvr);
         conversationRV = findViewById(R.id.conversation_rc);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         conversationRV.setLayoutManager(layoutManager);
