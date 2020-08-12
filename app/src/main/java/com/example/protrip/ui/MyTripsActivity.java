@@ -34,7 +34,6 @@ public class MyTripsActivity extends AppCompatActivity  {
 
     private RecyclerView myTripsRV;
     private EditText search;
-    private  ArrayList<Trip> trips;
 
     private FirebaseRecyclerAdapter<Trip, TripViewHolder> firebaseRecyclerAdapter;
     private Query mQueryCurrent;
@@ -42,9 +41,6 @@ public class MyTripsActivity extends AppCompatActivity  {
     @Override
     protected void onStart() {
         super.onStart();
-
-        if(search.getText().toString().equals("")) {
-
             FirebaseRecyclerOptions<Trip> options = new FirebaseRecyclerOptions.Builder<Trip>()
                     .setQuery(mQueryCurrent, Trip.class)
                     .build();
@@ -78,7 +74,6 @@ public class MyTripsActivity extends AppCompatActivity  {
             myTripsRV.setAdapter(firebaseRecyclerAdapter);
             firebaseRecyclerAdapter.startListening();
         }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
