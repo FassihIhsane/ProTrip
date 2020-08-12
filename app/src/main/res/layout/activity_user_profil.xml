@@ -16,6 +16,30 @@
         android:layout_marginTop="@dimen/_70sdp"
         android:layout_centerHorizontal="true"
         />
+    <ImageView
+        android:id="@+id/online_button"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/_75sdp"
+        android:layout_marginRight="@dimen/_110sdp"
+        android:layout_marginBottom="@dimen/_2sdp"
+        android:src="@drawable/online"
+        android:visibility="gone"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/_110sdp" />
+    <ImageView
+        android:id="@+id/offline_button"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/_75sdp"
+        android:layout_marginRight="@dimen/_110sdp"
+        android:layout_marginBottom="@dimen/_2sdp"
+        android:src="@drawable/offline"
+        android:visibility="gone"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/_110sdp" />
     <ImageButton
         android:id="@+id/i_change"
         android:layout_width="@dimen/_35sdp"
@@ -88,9 +112,10 @@
         android:orientation="horizontal"
         android:gravity="center">
         <TextView
+            android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Active"
+            tools:text="Status"
             android:textSize="@dimen/_13sdp"
             android:textColor="@color/white"
             />
@@ -112,7 +137,7 @@
             android:id="@+id/age_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Age"
+            tools:text="Age"
             android:textSize="@dimen/_13sdp"
             android:textColor="@color/white"/>
     </LinearLayout>
@@ -139,7 +164,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:textColor="@color/white"
-                android:text="@string/_2120707193930"
+                tools:text="2120707193930"
                 android:layout_marginStart="@dimen/_10sdp" />
 
     </LinearLayout>
@@ -162,7 +187,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:textColor="@color/white"
-                android:text="@string/admin_gmail_com"
+                tools:text="admin@gmail.com"
                 android:layout_marginStart="@dimen/_10sdp" />
 
         </LinearLayout>
