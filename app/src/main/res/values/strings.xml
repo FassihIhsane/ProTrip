@@ -40,5 +40,6 @@
     <string name="_2120707193930">+2120707193930</string>
     <string name="phone_number">Phone number</string>
     <string name="age">Age</string>
+    <string name="search">Search...</string>
 
 </resources>
