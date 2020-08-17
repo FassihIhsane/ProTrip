@@ -21,6 +21,12 @@ import android.widget.Toast;
 
 import com.example.protrip.R;
 import com.example.protrip.data.User;
+import com.example.protrip.notifications.APIService;
+import com.example.protrip.notifications.Client;
+import com.example.protrip.notifications.Data;
+import com.example.protrip.notifications.MyResponse;
+import com.example.protrip.notifications.Sender;
+import com.example.protrip.notifications.Token;
 import com.example.protrip.util.Constant;
 import com.example.protrip.util.DB;
 import com.firebase.ui.common.ChangeEventType;
@@ -29,16 +35,21 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.pedromassango.doubleclick.DoubleClick;
 import com.pedromassango.doubleclick.DoubleClickListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -47,8 +58,8 @@ public class ChatActivity extends AppCompatActivity {
     private String senderId, receiverId, conversationId, myName, receiverName;
     public static final int MSG_TYPE_RIGHT = 1;
     public static final int MSG_TYPE_LEFT = 0;
-
-    ValueEventListener seenListener;
+    Boolean notify = false;
+    APIService apiService;
 
 
     private FirebaseRecyclerAdapter<Message, MessageViewHolder> firebaseRecyclerAdapter;
@@ -111,6 +122,7 @@ public class ChatActivity extends AppCompatActivity {
 
         messagesRV.setAdapter(firebaseRecyclerAdapter);
         firebaseRecyclerAdapter.startListening();
+
     }
 
     @Override
@@ -152,6 +164,7 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             public void onDoubleClick(View view) {
+                notify = true;
 
                 final String message = inputMessage.getText().toString();
 
@@ -167,12 +180,64 @@ public class ChatActivity extends AppCompatActivity {
                                 inputMessage.setText(""); // Clear message field
                                 refreshConversation(message);
                             });
+                    final String msg = message;
+                    final DatabaseReference reference = DB.getReference(Constant.USERS).child(DB.getUserId());
+                    reference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            User user = dataSnapshot.getValue(User.class);
+                            assert user != null;
+                            if(notify) {
+                                sendNotification(receiverId, user.getFullName(), msg);
+                            }
+                            notify = false;
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
 
                 }else {
                     Toast.makeText(ChatActivity.this, "Message cannot be empty!", Toast.LENGTH_SHORT).show();
                 }
             }
         }));
+
+    }
+
+    private void sendNotification(String receiver, final String userName, final String message ){
+        DatabaseReference allTokens = FirebaseDatabase.getInstance().getReference("Tokens");
+        Query query = allTokens.orderByKey().equalTo(receiver);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()){
+                    Token token = ds.getValue(Token.class);
+                    Data data = new Data(DB.getUserId(), userName+": "+message,"New Message",receiver,R.mipmap.ic_launcher_logo);
+
+                    Sender sender = new Sender(data, token.getToken());
+                    apiService.sendNotification(sender)
+                              .enqueue(new Callback<MyResponse>() {
+                                  @Override
+                                  public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                                      Toast.makeText(ChatActivity.this,""+response.message(),Toast.LENGTH_SHORT).show();
+                                  }
+
+                                  @Override
+                                  public void onFailure(Call<MyResponse> call, Throwable t) {
+
+                                  }
+                              });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void refreshConversation(String msg) {
@@ -239,6 +304,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private void initUI() {
 
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
         messagesRV = findViewById(R.id.messages_rv);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         messagesRV.setLayoutManager(layoutManager);
@@ -249,6 +315,23 @@ public class ChatActivity extends AppCompatActivity {
         senderId = DB.getUserId();
         receiverId = getIntent().getStringExtra(Constant.USERID_INTENT);
         conversationId = (senderId.compareTo(receiverId) > 0) ? senderId.concat(receiverId) : receiverId.concat(senderId);
+    }
+
+    private void checkOnlineStatus(String status){
+        DatabaseReference setChild = DB.getReference(Constant.USERS).child(DB.getUserId());
+        setChild.child("status").setValue(status);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkOnlineStatus("online");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        checkOnlineStatus("offline");
     }
 
 }

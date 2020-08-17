@@ -27,8 +27,9 @@ public class DB {
 
     public static String getUserId(){
 
-        return Objects.requireNonNull(FirebaseAuth.getInstance()
-                      .getCurrentUser())
+
+        return (Objects.requireNonNull(FirebaseAuth.getInstance()
+                .getCurrentUser()))
                       .getUid();
     }
 

@@ -27,6 +27,11 @@ public class Trip {
 
     }
 
+    public Trip(double longitude, double latitude) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
     @NonNull
     @Override
     public String toString() {

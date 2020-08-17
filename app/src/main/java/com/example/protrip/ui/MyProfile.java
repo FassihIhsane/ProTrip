@@ -24,6 +24,7 @@ import com.example.protrip.util.Constant;
 import com.example.protrip.util.DB;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +43,7 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
     private ImageButton updateName, updateDescription, updatePicture, message, back;
     CircleImageView imageProfile;
     private ImageView online,offline;
+    FirebaseUser fUser;
     private Toolbar toolbar;
     private StorageReference mStorageRef;
 
@@ -143,7 +145,7 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
                 openGallery();
                 break;
             case R.id.back_btn:
-                startActivity(new Intent(MyProfile.this, MapsActivity.class));
+                startActivity(new Intent(MyProfile.this, MapsActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 break;
         }
     }
@@ -230,13 +232,13 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
 
     @Override
     protected void onResume() {
-        checkOnlineStatus("online");
         super.onResume();
+        checkOnlineStatus("online");
     }
 
     @Override
     protected void onPause() {
-        checkOnlineStatus("offline");
         super.onPause();
+        checkOnlineStatus("offline");
     }
 }
