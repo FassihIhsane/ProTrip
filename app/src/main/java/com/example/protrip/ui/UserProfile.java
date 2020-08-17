@@ -41,6 +41,7 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
     private ImageView online,offline;
     CircleImageView imageProfile;
     private Toolbar toolbar;
+    FirebaseUser firebaseUser;
     private StorageReference mStorageRef;
 
     private String userId;
@@ -137,7 +138,7 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
                 chatProfile();
                 break;
             case R.id.back_btn:
-                startActivity(new Intent(UserProfile.this,MapsActivity.class));
+                startActivity(new Intent(UserProfile.this,MapsActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 break;
         }
     }
@@ -151,13 +152,13 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
 
     @Override
     protected void onResume() {
-        checkOnlineStatus("online");
         super.onResume();
+        checkOnlineStatus("online");
     }
 
     @Override
     protected void onPause() {
-    checkOnlineStatus("offline");
         super.onPause();
+        checkOnlineStatus("offline");
     }
 }

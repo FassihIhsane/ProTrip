@@ -6,9 +6,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.lib.widget.snackbar.Snackbar;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -19,15 +23,19 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.protrip.R;
 import com.example.protrip.data.Trip;
+import com.example.protrip.notifications.Token;
 import com.example.protrip.util.Constant;
 import com.example.protrip.util.DB;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.internal.ICameraUpdateFactoryDelegate;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -37,10 +45,15 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -53,9 +66,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private TextView destination;
     private ProgressBar crudProgress;
     private ImageButton add , delete, profile, update;
+    private SearchView location;
     private Trip mTrip;
     private HashMap<String, Marker> fetchedTrips;
-
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
 
@@ -70,6 +83,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
 
         initUI();
+        updateToken(FirebaseInstanceId.getInstance().getToken());
+
+    }
+
+
+
+    private void updateToken(String token){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token token1 = new Token(token);
+        reference.child(mUser.getUid()).setValue(token1);
     }
 
     private void initUI() {
@@ -77,6 +100,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
+        location = findViewById(R.id.sv_location);
     }
 
     @Override
@@ -155,7 +179,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void logout() {
         mAuth.signOut();
-        startActivity(new Intent(this, FirstLaunchActivity.class));
+        startActivity(new Intent(this, FirstLaunchActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         finish();
     }
 
@@ -183,6 +207,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                       addMarkerToMap(t);
                   }
+
               }
 
               @Override
@@ -410,19 +435,23 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void checkOnlineStatus(String status){
-        DatabaseReference setChild = DB.getReference(Constant.USERS).child(DB.getUserId());
+        DatabaseReference setChild = DB.getReference(Constant.USERS).child(mUser.getUid());
         setChild.child("status").setValue(status);
+        SharedPreferences sp = getSharedPreferences("SP_USER",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("Current_USERID", mUser.getUid());
+        editor.apply();
     }
 
     @Override
     protected void onResume() {
-        checkOnlineStatus("online");
         super.onResume();
+        checkOnlineStatus("online");
     }
 
     @Override
     protected void onPause() {
-        checkOnlineStatus("offline");
         super.onPause();
+        checkOnlineStatus("offline");
     }
 }

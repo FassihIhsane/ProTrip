@@ -164,4 +164,21 @@ public class MyTripsActivity extends AppCompatActivity  {
 
     }
 
+    private void checkOnlineStatus(String status){
+        DatabaseReference setChild = DB.getReference(Constant.USERS).child(DB.getUserId());
+        setChild.child("status").setValue(status);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkOnlineStatus("online");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        checkOnlineStatus("offline");
+    }
+
 }
