@@ -78,15 +78,43 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-
         //if(mapFragment != null)
         mapFragment.getMapAsync(this);
 
         initUI();
+        onSearch();
         updateToken(FirebaseInstanceId.getInstance().getToken());
+
+
 
     }
 
+    private void onSearch() {
+        location.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String loc = location.getQuery().toString();
+                List<Address> addressList = null;
+                if(loc!=null || !loc.equals("")){
+                    Geocoder geocoder = new Geocoder(MapsActivity.this);
+                    try {
+                        addressList = geocoder.getFromLocationName(loc, 1);
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
+                    Address address = addressList.get(0);
+                    LatLng latLng = new LatLng(address.getLatitude(),address.getLongitude());
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,5));
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+    }
 
 
     private void updateToken(String token){
