@@ -71,7 +71,7 @@
             android:textStyle="bold"
             android:autofillHints=""
             android:inputType="text"
-            tools:ignore="LabelFor" />
+            tools:ignore="LabelFor,RelativeOverlap" />
 
         <ImageButton
             android:id="@+id/n_change"
@@ -87,21 +87,70 @@
             android:visibility="gone"
             tools:ignore="ContentDescription" />
 
-        <ImageButton
-            android:id="@+id/d_change"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="@dimen/_40sdp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_marginBottom="124dp"
-            android:background="@null"
-            android:src="@drawable/ic_edit"
-            android:visibility="gone"
-            tools:ignore="ContentDescription" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_175sdp"
+            tools:ignore="RelativeOverlap">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_200sdp"
+                android:text="@string/about"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13sdp" />
+
+            <LinearLayout
+                android:id="@+id/linear1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_225sdp"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:background="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="@dimen/_250sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_205sdp"
+                android:background="@null"
+                android:hint="@string/describe_yourself"
+                android:importantForAutofill="no"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:inputType="text" />
+
+                <ImageButton
+                    android:id="@+id/d_change"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_240sdp"
+                    android:background="@null"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:src="@drawable/ic_edit"
+                    android:visibility="gone"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
+
 
 
     </RelativeLayout>
@@ -194,53 +243,6 @@
 
     </LinearLayout>
 
-    <RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_175sdp"
-    >
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/about"
-        android:textSize="@dimen/_13sdp"
-        android:layout_marginLeft="@dimen/_20sdp"
-        android:textColor="@color/white"
-        android:layout_marginTop="@dimen/_200sdp"
-        android:layout_marginStart="@dimen/_20sdp" />
-
-        <LinearLayout
-            android:id="@+id/linear1"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_225sdp"
-            android:orientation="vertical">
-
-            <View
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_1sdp"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:background="@color/white" />
-        </LinearLayout>
-
-            <EditText
-                android:id="@+id/description"
-                android:layout_width="@dimen/_250sdp"
-                android:layout_height="@dimen/_100sdp"
-                android:background="@null"
-                android:hint="@string/describe_yourself"
-                android:textColorHint="@color/white"
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_205sdp"
-                android:textColor="@color/white"
-                android:importantForAutofill="no"
-                android:layout_marginStart="@dimen/_20sdp" />
-
-    </RelativeLayout>
-
-
 
     <ImageButton
         android:id="@+id/contact_me"
@@ -248,6 +250,16 @@
         android:layout_height="@dimen/_40sdp"
         android:background="@drawable/transparent_color"
         android:src="@drawable/ic_message"
+        android:layout_marginBottom="@dimen/_25sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone" />
+    <ImageButton
+        android:id="@+id/add_me"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/transparent_color"
+        android:src="@drawable/ic_add_friend"
         android:layout_marginBottom="@dimen/_25sdp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"

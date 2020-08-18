@@ -15,11 +15,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.protrip.R;
+import com.example.protrip.data.ListFriend;
 import com.example.protrip.data.Trip;
 import com.example.protrip.data.User;
 import com.example.protrip.util.Constant;
 import com.example.protrip.util.DB;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,11 +40,10 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
 
 
     private TextView userName, description,age,tel,mail,status;
-    private ImageButton message,back;
+    private ImageButton message,back,add;
     private ImageView online,offline;
     CircleImageView imageProfile;
     private Toolbar toolbar;
-    FirebaseUser firebaseUser;
     private StorageReference mStorageRef;
 
     private String userId;
@@ -56,43 +58,65 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
     }
 
     private void initProfile(String idUser) {
-
-
-        DB.getReference(Constant.USERS).child(userId)
+        DB.getReference(Constant.USERS).child(idUser)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         User usr = dataSnapshot.getValue(User.class);
-
+                        ListFriend listFriend = dataSnapshot.getValue(ListFriend.class);
                         if (usr != null) {
                             userName.setText(usr.getFullName());
                             description.setText(usr.getDescription());
                             mail.setText(usr.getEmail());
                             tel.setText(usr.getTel());
-                            age.setText(usr.getAge()+" years old");
+                            age.setText(usr.getAge() + " years old");
                             userName.setEnabled(false);
                             description.setEnabled(false);
-                            message.setVisibility(View.VISIBLE);
-
-                            if(usr.getStatus().equals("online")){
+                            add.setVisibility(View.VISIBLE);
+                            manageButton(idUser);
+                            if (usr.getStatus().equals("online")) {
                                 online.setVisibility(View.VISIBLE);
                                 offline.setVisibility(View.GONE);
                                 status.setText(usr.getStatus());
-                            }else{
+                            } else {
                                 offline.setVisibility(View.VISIBLE);
                                 online.setVisibility(View.GONE);
                                 status.setText(usr.getStatus());
                             }
-                        }
 
-                    }
 
+
+                        }}
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
                 });
+                }
+
+    private void manageButton(String idUser) {
+        DB.getReference(Constant.FRIENDS).child(DB.getUserId()).child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.hasChild("userId")){
+                    String user = snapshot.child("userId").getValue().toString();
+                    if(user.equals(idUser)){
+                        message.setVisibility(View.VISIBLE);
+                        add.setVisibility(View.GONE);
+                    }else{
+                        add.setVisibility(View.VISIBLE);
+                    }
+                    }
+                }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
+
     private void checkOnlineStatus(String status){
        DatabaseReference setChild = DB.getReference(Constant.USERS).child(DB.getUserId());
        setChild.child("status").setValue(status);
@@ -110,6 +134,8 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
         imageProfile = findViewById(R.id.image_profile);
         online = findViewById(R.id.online_button);
         offline = findViewById(R.id.offline_button);
+        add = findViewById(R.id.add_me);
+        add.setOnClickListener(this);
         status = findViewById(R.id.status);
         back = findViewById(R.id.back_btn);
         back.setOnClickListener(this);
@@ -140,7 +166,27 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
             case R.id.back_btn:
                 startActivity(new Intent(UserProfile.this,MapsActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 break;
+            case R.id.add_me:
+                addFriend();
+                break;
         }
+    }
+
+    private void addFriend() {
+
+        ListFriend listFriend = new ListFriend("saved",userId);
+        DB.getReference(Constant.FRIENDS)
+                       .child(DB.getUserId())
+                       .child(userId)
+                       .setValue(listFriend)
+                       .addOnCompleteListener(task -> {
+                           if(task.isSuccessful()){
+                               Toast.makeText(UserProfile.this, "New friend added successfully", Toast.LENGTH_SHORT).show();
+                               add.setVisibility(View.GONE);
+                               message.setVisibility(View.VISIBLE);
+                           }
+                       });
+
     }
 
     private void chatProfile() {

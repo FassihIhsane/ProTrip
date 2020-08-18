@@ -12,4 +12,5 @@ public interface Constant {
     String CHAT = "Chats";
     String CONVERSATION = "Conversations";
     String USERID_INTENT = "userId";
+    String FRIENDS = "ListFriends";
 }
