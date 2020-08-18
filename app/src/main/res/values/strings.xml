@@ -41,5 +41,7 @@
     <string name="phone_number">Phone number</string>
     <string name="age">Age</string>
     <string name="search">Search...</string>
+    <string name="users">Users</string>
+    <string name="my_friends">My friends</string>
 
 </resources>

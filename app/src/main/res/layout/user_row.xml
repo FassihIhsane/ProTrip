@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_70sdp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_picture"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_8sdp"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:src="@mipmap/ic_launcher_round"
+        android:layout_marginStart="@dimen/_8sdp" />
+
+    <ImageView
+        android:id="@+id/online"
+        android:layout_width="@dimen/_15sdp"
+        android:layout_height="@dimen/_15sdp"
+        android:layout_marginLeft="@dimen/_45sdp"
+        android:layout_marginTop="@dimen/_42sdp"
+        android:src="@drawable/online"
+        android:visibility="gone"
+        android:layout_marginStart="@dimen/_45sdp" />
+    <ImageView
+        android:id="@+id/offline"
+        android:layout_width="@dimen/_15sdp"
+        android:layout_height="@dimen/_15sdp"
+        android:layout_marginLeft="@dimen/_45sdp"
+        android:layout_marginTop="@dimen/_42sdp"
+        android:src="@drawable/offline"
+        android:visibility="gone"
+        android:layout_marginStart="@dimen/_45sdp" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_18sdp"
+        android:layout_marginLeft="@dimen/_18sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_toEndOf="@+id/user_picture"
+        android:layout_toRightOf="@+id/user_picture"
+        android:textColor="#FBFBFB"
+        android:textSize="@dimen/_13sdp"
+        android:textStyle="bold"
+        tools:text="Ihsane" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="@dimen/_220sdp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginStart="@dimen/_70sdp"
+            android:layout_marginLeft="@dimen/_70sdp"
+            android:layout_marginTop="@dimen/_65sdp"
+            android:background="#477391" />
+    </LinearLayout>
+
+</RelativeLayout>

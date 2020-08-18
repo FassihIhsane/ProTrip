@@ -39,6 +39,8 @@ import com.google.android.gms.maps.internal.ICameraUpdateFactoryDelegate;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -153,6 +155,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return true;
             case R.id.conversation:
                 launchActivity(ConversationActivity.class);
+                return true;
+            case R.id.users:
+                launchActivity(UsersActivity.class);
                 return true;
             default:
                 return super.onContextItemSelected(item);
@@ -425,10 +430,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     .setValue(trip)
                     .addOnCompleteListener(task -> {
 
-                        if(task.isSuccessful()){
-                            toggleProgress(add);
+                        if (task.isSuccessful()) {
+                            MapsActivity.this.toggleProgress(add);
                             markerDialog.dismiss();
-                            showSnackBar("Trip was added successfully");
+                            MapsActivity.this.showSnackBar("Trip was added successfully");
                         }
                     });
         }

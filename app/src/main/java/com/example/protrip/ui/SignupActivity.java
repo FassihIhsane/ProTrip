@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.protrip.R;
 import com.example.protrip.data.User;
 import com.example.protrip.util.Constant;
+import com.example.protrip.util.DB;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -81,6 +82,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         if(isValid){
             toggleSignup();
             User usr = new User(email, fullName,null,phone,age,status);
+            String id = DB.getKey(Constant.USERS);
+            usr.setId(id);
             usr.setPassword(password);
             createAccount(usr);
         }
