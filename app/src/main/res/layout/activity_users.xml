@@ -5,23 +5,9 @@
     android:layout_height="match_parent"
     android:background="@drawable/nim"
     tools:context=".ui.UsersActivity">
-    <EditText
-        android:id="@+id/search_users"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/search"
-        android:textColor="@color/white"
-        android:inputType="text"
-        android:backgroundTint="@color/white"
-        android:textCursorDrawable="@color/white"
-        android:layout_margin="@dimen/_5sdp"
-        android:padding="@dimen/_15sdp"
-        android:textColorHint="@color/white"
-        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/user_rc"
-        android:layout_below="@id/search_users"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </RelativeLayout>
