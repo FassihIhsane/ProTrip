@@ -156,6 +156,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.conversation:
                 launchActivity(ConversationActivity.class);
                 return true;
+            case R.id.setting:
+                launchActivity(SettingsActivity.class);
+                return true;
             case R.id.users:
                 launchActivity(UsersActivity.class);
                 return true;
