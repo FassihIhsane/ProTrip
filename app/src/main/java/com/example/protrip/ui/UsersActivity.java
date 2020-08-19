@@ -1,6 +1,7 @@
 package com.example.protrip.ui;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.protrip.R;
 import com.example.protrip.adapters.ConversationViewHolder;
@@ -40,6 +42,7 @@ import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 public class UsersActivity extends AppCompatActivity {
 
@@ -47,7 +50,6 @@ public class UsersActivity extends AppCompatActivity {
     private FirebaseRecyclerAdapter<ListFriend, UserViewHolder> firebaseRecyclerAdapter;
     private FirebaseRecyclerAdapter<User, UserViewHolder> firebaseRecyclerAdapterUser;
     private Query mQueryCurrent;
-    private EditText search;
     private StorageReference mStorageRef;
     DatabaseReference userRef;
 
@@ -55,9 +57,9 @@ public class UsersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         initUI();
         initFirebase();
-        onSearch();
     }
 
     private void initFirebase() {
@@ -130,9 +132,17 @@ public class UsersActivity extends AppCompatActivity {
 
                 userViewHolder.itemView.setOnClickListener(v->{
 
+
                     Intent intent = new Intent(UsersActivity.this, UserProfile.class);
                     intent.putExtra(Constant.USERID_INTENT,listFriend.getUserId());
                     startActivity(intent);
+                });
+                userViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        showDialogBlock(listFriend.getUserId());
+                        return true;
+                    }
                 });
             }
         };
@@ -142,33 +152,41 @@ public class UsersActivity extends AppCompatActivity {
 
         }
 
-    private void onSearch() {
-        search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    private void showDialogBlock(String userId) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                UsersActivity.this);
 
-            }
+        alertDialog.setTitle("Confirm Delete...");
+        alertDialog.setMessage("Are you sure you want delete this user from your list of friends ?");
+// Setting Positive "Delete" Btn
+        alertDialog.setPositiveButton("Delete",
+                (dialog, which) -> {
+                    DB.getReference(Constant.FRIENDS).child(DB.getUserId())
+                            .child(userId)
+                            .removeValue()
+                            .addOnCompleteListener(task -> {
+                                if(task.isSuccessful()){
+                                    Toast.makeText(getApplicationContext(),"User deleted successfully", Toast.LENGTH_SHORT)
+                                            .show();
+                                }
+                            });
+                });
+// Setting Negative "Cancel" Btn
+        alertDialog.setNegativeButton("Cancel",
+                (dialog, which) -> {
+                    // Write your code here to execute after dialog
+                    Toast.makeText(getApplicationContext(),
+                            "Cancel", Toast.LENGTH_SHORT)
+                            .show();
+                    dialog.cancel();
+                });
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                searchUsers(s.toString());
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-    }
-
-    private void searchUsers(String toString) {
-
+// Showing Alert Dialog
+        alertDialog.show();
     }
 
     private void initUI() {
         userRV = findViewById(R.id.user_rc);
-        search = findViewById(R.id.search_users);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         userRV.setLayoutManager(layoutManager);
         userRV.setHasFixedSize(true);

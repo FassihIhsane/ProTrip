@@ -65,6 +65,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/_180sdp"
             android:background="@null"
+            android:maxLength="25"
             tools:text="Admin"
             android:textColor="@color/white"
             android:textSize="21sp"
@@ -123,31 +124,30 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/description"
-                android:layout_width="@dimen/_250sdp"
-                android:layout_height="@dimen/_100sdp"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_205sdp"
-                android:background="@null"
-                android:hint="@string/describe_yourself"
-                android:importantForAutofill="no"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:inputType="text" />
+                <EditText
+                    android:id="@+id/description"
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_205sdp"
+                    android:background="@null"
+                    android:maxLength="100"
+                    android:hint="@string/describe_yourself"
+                    android:importantForAutofill="no"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white" />
 
                 <ImageButton
                     android:id="@+id/d_change"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_240sdp"
                     android:background="@null"
-                    android:layout_marginLeft="@dimen/_10sdp"
                     android:src="@drawable/ic_edit"
-                    android:visibility="gone"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    />
+                    android:visibility="gone" />
             </LinearLayout>
         </RelativeLayout>
 

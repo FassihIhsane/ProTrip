@@ -27,6 +27,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText fullNameET, passwordET, emailET,ageET,telET;
@@ -42,7 +44,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
         initUI();
     }
 
@@ -189,6 +190,12 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
          );
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this,FirstLaunchActivity.class));
     }
 
 }
