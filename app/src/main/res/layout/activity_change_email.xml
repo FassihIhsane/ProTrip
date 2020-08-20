@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.ChangePasswordActivity">
+    <ImageButton
+        android:id="@+id/back_email"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@null"
+        android:src="@drawable/ic_back_password"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_5sdp" />
+
+    <ImageView
+        android:id="@+id/image1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_email"
+        android:layout_marginTop="@dimen/_80sdp"/>
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:layout_below="@+id/image1"
+        android:textSize="@dimen/_20sdp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="@string/change"/>
+    <TextView
+        android:id="@+id/text3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:layout_below="@id/text1"
+        android:textSize="@dimen/_20sdp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="@string/email"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout5"
+        android:layout_below="@id/text3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:inputType="textPassword"
+        tools:layout_editor_absoluteX="0dp">
+
+        <EditText
+            android:id="@+id/current_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_baseline_email_24"
+            android:drawableLeft="@drawable/ic_baseline_email_24"
+            android:drawablePadding="16dp"
+            android:inputType="textEmailAddress"
+            android:hint="@string/enter_your_current_email"
+            android:importantForAutofill="no"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_below="@id/textInputLayout5"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/new_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawableStart="@drawable/ic_baseline_email_24"
+            android:drawableLeft="@drawable/ic_baseline_email_24"
+            android:drawablePadding="16dp"
+            android:hint="@string/enter_your_new_email"
+            android:inputType="textEmailAddress"
+            tools:layout_editor_absoluteX="0dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout2"
+        android:layout_below="@id/textInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword">
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_password"
+            android:drawableLeft="@drawable/ic_password"
+            android:drawablePadding="16dp"
+            android:hint="@string/enter_your_password"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="477dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/change_email_btn"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_60sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_below="@id/textInputLayout2"
+        android:background="@drawable/button_login"
+        android:text="@string/change_email"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/_60sdp" />
+
+</RelativeLayout>

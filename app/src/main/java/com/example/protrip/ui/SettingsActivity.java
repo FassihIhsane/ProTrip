@@ -13,7 +13,7 @@ import com.example.protrip.R;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private TextView changePassword, deleteAccount;
+    private TextView changePassword, deleteAccount,changeEmail;
     private ImageButton back;
     private Toolbar toolbar;
 
@@ -28,6 +28,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     private void initUI() {
         changePassword = findViewById(R.id.change_password);
         deleteAccount = findViewById(R.id.delete_account);
+        changeEmail = findViewById(R.id.change_email);
+        changeEmail.setOnClickListener(this);
         back = findViewById(R.id.back_settings);
         back.setOnClickListener(this);
         toolbar = findViewById(R.id.toolbar_settings);
@@ -44,6 +46,9 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             case R.id.change_password:
                 updatePassword();
                 break;
+            case R.id.change_email:
+                updateEmail();
+                break;
 
             case R.id.delete_account :
                 deleteAccountUser();
@@ -54,6 +59,10 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 break;
     }
 }
+
+    private void updateEmail() {
+        startActivity(new Intent(this,ChangeEmailActivity.class));
+    }
 
     private void updatePassword() {
         startActivity(new Intent(this, ChangePasswordActivity.class));

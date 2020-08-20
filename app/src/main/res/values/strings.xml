@@ -8,7 +8,6 @@
     <string name="full_name">Full name</string>
     <string name="welcome">WELCOME,</string>
     <string name="start">Sign up to start your adventure</string>
-    <string name="email">Email</string>
     <string name="profil">Profil</string>
     <string name="logout">Logout</string>
     <string name="save">Save</string>
@@ -53,5 +52,14 @@
     <string name="enter_your_new_password">Enter your new password</string>
     <string name="confirm_your_password">Confirm your password</string>
     <string name="delete_your_account">Delete your account</string>
+    <string name="enter_your_current_email">Enter your current email</string>
+    <string name="enter_your_new_email">Enter your new email</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="email">Email</string>
+    <string name="change_email">Change Email</string>
+    <string name="change_your_email">Change your email</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="manage_information_about_and_your_account">Manage information about and your account</string>
+    <string name="manage_information_about_yoy_and_your_account">Manage information about yoy and your account</string>
 
 </resources>
