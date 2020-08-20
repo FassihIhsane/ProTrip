@@ -69,5 +69,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void deleteAccountUser() {
+        startActivity(new Intent(this, DeleteUserActivity.class));
     }
     }

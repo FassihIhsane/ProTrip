@@ -31,7 +31,6 @@
     <string name="forgot_password">Forgot password !</string>
     <string name="reset">Reset</string>
     <string name="cancel">Cancel</string>
-    <string name="enter_your_email">Enter your email</string>
     <string name="click_on">Enter your email, and click on reset, you will receive an email to reset your password</string>
     <string name="profile">Profile</string>
     <string name="about">About</string>
@@ -61,5 +60,11 @@
     <string name="account_settings">Account Settings</string>
     <string name="manage_information_about_and_your_account">Manage information about and your account</string>
     <string name="manage_information_about_yoy_and_your_account">Manage information about yoy and your account</string>
+    <string name="manage_information_about_your_account">Manage information about your account</string>
+    <string name="account_deletion">Account Deletion</string>
+    <string name="once_you_delete_your_account_you_ll_lose_all_your_private_information_about_your_trips_and_your_contacts">Once you delete your account, you\'ll lose all your private information, about your trips and your contacts.</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="delete_account">Delete account</string>
+    <string name="to_delete_your_account_confirm_your_email_and_password">To delete your account, confirm your email and password</string>
 
 </resources>

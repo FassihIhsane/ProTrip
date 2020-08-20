@@ -28,7 +28,7 @@
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_below="@id/text"
         android:layout_marginTop="@dimen/_5sdp"
-        android:text="@string/manage_information_about_yoy_and_your_account"
+        android:text="@string/manage_information_about_your_account"
         android:textColor="@color/grey"
         android:layout_marginStart="@dimen/_10sdp" />
 
