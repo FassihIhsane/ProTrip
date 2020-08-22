@@ -34,6 +34,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserProfile extends AppCompatActivity implements View.OnClickListener {
@@ -69,7 +71,7 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
                             description.setText(usr.getDescription());
                             mail.setText(usr.getEmail());
                             tel.setText(usr.getTel());
-                            age.setText(usr.getAge() + " years old");
+                            age.setText(usr.getAge());
                             userName.setEnabled(false);
                             description.setEnabled(false);
                             add.setVisibility(View.VISIBLE);
@@ -95,11 +97,11 @@ public class UserProfile extends AppCompatActivity implements View.OnClickListen
                 }
 
     private void manageButton(String idUser) {
-        DB.getReference(Constant.FRIENDS).child(DB.getUserId()).child(userId).addValueEventListener(new ValueEventListener() {
+        DB.getReference(Constant.FRIENDS).child(DB.getUserId()).child(idUser).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.hasChild("userId")){
-                    String user = snapshot.child("userId").getValue().toString();
+                    String user = Objects.requireNonNull(snapshot.child("userId").getValue()).toString();
                     if(user.equals(idUser)){
                         message.setVisibility(View.VISIBLE);
                         add.setVisibility(View.GONE);

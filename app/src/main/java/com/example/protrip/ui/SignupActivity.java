@@ -79,10 +79,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         String age = ageET.getText().toString();
         String password = passwordET.getText().toString();
         String status = "offline";
+        String typingTo = "noOne";
         boolean isValid = validateInput(fullName,email,password,phone,age);
         if(isValid){
             toggleSignup();
-            User usr = new User(email, fullName,null,phone,age,status);
+            User usr = new User(email, fullName,null,phone,age,status,typingTo);
             String id = DB.getKey(Constant.USERS);
             usr.setId(id);
             usr.setPassword(password);

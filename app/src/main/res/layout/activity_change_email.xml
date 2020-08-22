@@ -46,6 +46,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout5"
         android:layout_below="@id/text3"
+        android:layout_margin="@dimen/_10sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
@@ -69,6 +70,7 @@
         android:id="@+id/textInputLayout"
         android:layout_below="@id/textInputLayout5"
         android:inputType="textPassword"
+        android:layout_margin="@dimen/_10sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -90,6 +92,7 @@
         android:id="@+id/textInputLayout2"
         android:layout_below="@id/textInputLayout"
         android:layout_width="match_parent"
+        android:layout_margin="@dimen/_10sdp"
         android:layout_height="wrap_content"
         android:inputType="textPassword">
 

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/nim"
+    android:background="@color/white"
     tools:context=".ui.ConversationActivity">
 
     <EditText
@@ -11,13 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/search"
-        android:textColor="@color/white"
+        android:textColor="#000000"
         android:inputType="text"
-        android:backgroundTint="@color/white"
-        android:textCursorDrawable="@color/white"
+        android:backgroundTint="@color/colorPrimary"
+        android:textCursorDrawable="@color/colorPrimary"
         android:layout_margin="@dimen/_5sdp"
         android:padding="@dimen/_15sdp"
-        android:textColorHint="@color/white"
+        android:textColorHint="@color/grey"
         />
 
     <androidx.recyclerview.widget.RecyclerView

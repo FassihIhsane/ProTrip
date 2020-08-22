@@ -9,6 +9,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.protrip.R;
@@ -30,6 +31,7 @@ import java.util.Objects;
 public class ChangeEmailActivity extends AppCompatActivity implements View.OnClickListener{
     private EditText currentEmail, newEmail, password;
     Button changeEmail;
+    ImageButton back;
     FirebaseAuth mAuth;
 
     @Override
@@ -42,6 +44,8 @@ public class ChangeEmailActivity extends AppCompatActivity implements View.OnCli
 
     private void initUI() {
         currentEmail = findViewById(R.id.current_email);
+        back = findViewById(R.id.back_email);
+        back.setOnClickListener(this);
         newEmail = findViewById(R.id.new_email);
         password = findViewById(R.id.password);
         changeEmail = findViewById(R.id.change_email_btn);

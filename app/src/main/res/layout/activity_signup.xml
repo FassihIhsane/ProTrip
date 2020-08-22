@@ -49,6 +49,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="@dimen/_10sdp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.327">
 
@@ -59,6 +60,8 @@
             android:drawableStart="@drawable/ic_full_name"
             android:drawableLeft="@drawable/ic_full_name"
             android:drawablePadding="16dp"
+            android:textCursorDrawable="@color/colorPrimary"
+            android:backgroundTint="@color/colorPrimary"
             android:hint="@string/full_name"
             android:importantForAutofill="no"
             android:inputType="text" />
@@ -69,6 +72,7 @@
         android:id="@+id/textInputLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
         android:layout_marginTop="12dp"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout1"
         tools:layout_editor_absoluteX="0dp">
@@ -80,6 +84,8 @@
             android:drawableStart="@drawable/ic_baseline_local_phone_24"
             android:drawableLeft="@drawable/ic_baseline_local_phone_24"
             android:drawablePadding="16dp"
+            android:textCursorDrawable="@color/colorPrimary"
+            android:backgroundTint="@color/colorPrimary"
             android:hint="@string/phone_number"
             android:importantForAutofill="no"
             android:inputType="text" />
@@ -89,6 +95,7 @@
         android:id="@+id/textInputLayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
         android:layout_marginTop="12dp"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout4"
         tools:layout_editor_absoluteX="0dp">
@@ -100,6 +107,8 @@
             android:drawableStart="@drawable/ic_calendar"
             android:drawableLeft="@drawable/ic_calendar"
             android:drawablePadding="16dp"
+            android:textCursorDrawable="@color/colorPrimary"
+            android:backgroundTint="@color/colorPrimary"
             android:hint="@string/age"
             android:importantForAutofill="no"
             android:inputType="text" />
@@ -109,7 +118,7 @@
         android:id="@+id/textInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:layout_margin="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -126,6 +135,8 @@
             android:drawableLeft="@drawable/ic_baseline_email_24"
             android:drawablePadding="16dp"
             android:hint="@string/email"
+            android:textCursorDrawable="@color/colorPrimary"
+            android:backgroundTint="@color/colorPrimary"
             android:inputType="textEmailAddress"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
             tools:layout_editor_absoluteX="0dp" />
@@ -137,6 +148,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
+        android:layout_margin="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -151,6 +163,8 @@
             android:drawableLeft="@drawable/ic_password"
             android:drawablePadding="16dp"
             android:hint="@string/password"
+            android:textCursorDrawable="@color/colorPrimary"
+            android:backgroundTint="@color/colorPrimary"
             android:importantForAutofill="no"
             android:inputType="textPassword"
             tools:layout_editor_absoluteX="0dp"

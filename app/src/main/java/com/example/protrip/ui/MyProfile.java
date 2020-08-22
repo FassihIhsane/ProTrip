@@ -68,7 +68,7 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
                             userName.setText(usr.getFullName());
                             description.setText(usr.getDescription());
                             mail.setText(usr.getEmail());
-                            age.setText(usr.getAge()+" years old");
+                            age.setText(usr.getAge());
                             tel.setText(usr.getTel());
                             updateDescription.setVisibility(View.VISIBLE);
                             updateName.setVisibility(View.VISIBLE);
@@ -195,7 +195,7 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
         String phone = tel.getText().toString();
         String ageStr = age.getText().toString();
         // Construct user
-        User usr = new User(DB.getUserEmail(), fullName, desc, phone, ageStr, "online");
+        User usr = new User(DB.getUserEmail(), fullName, desc, phone, ageStr, "online","noOne");
         DB.getReference(Constant.USERS).child(DB.getUserId())
                 .setValue(usr)
                 .addOnCompleteListener(task -> {
@@ -213,7 +213,7 @@ public class MyProfile extends AppCompatActivity implements View.OnClickListener
         String ageStr = age.getText().toString();
 
         // Construct user
-        User usr = new User(DB.getUserEmail(), fullName, desc, phone, ageStr, "online");
+        User usr = new User(DB.getUserEmail(), fullName, desc, phone, ageStr, "online","noOne");
 
         DB.getReference(Constant.USERS).child(DB.getUserId())
                 .setValue(usr)

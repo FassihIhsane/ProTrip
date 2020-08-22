@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_50sdp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorPrimary"
+    android:elevation="@dimen/_4sdp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/back_chat"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/ic_back"
+            android:background="@null"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+
+            android:id="@+id/avatar_chat"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginLeft="@dimen/_40sdp"
+            android:src="@mipmap/ic_launcher_round"
+            android:layout_marginStart="@dimen/_40sdp" />
+
+        <TextView
+        android:id="@+id/receiver_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_7sdp"
+        android:layout_marginStart="@dimen/_80sdp"
+        android:layout_marginLeft="@dimen/_80sdp"
+        tools:text="user"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp" />
+
+    <TextView
+        android:id="@+id/status_chat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:layout_below="@id/receiver_name"
+        android:layout_marginLeft="@dimen/_80sdp"
+        android:textColor="@color/white"
+        tools:text="status"
+        android:textSize="@dimen/_9sdp"
+        android:layout_marginStart="@dimen/_80sdp" />
+    </RelativeLayout>
+</androidx.appcompat.widget.Toolbar>

@@ -44,6 +44,7 @@
             android:parentActivityName=".ui.MapsActivity" />
         <activity
             android:name=".ui.ChatActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:parentActivityName=".ui.ConversationActivity" />
         <activity
             android:name=".ui.MyTripsActivity"
