@@ -2,21 +2,28 @@ package com.example.protrip.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.protrip.adapters.MessageViewHolder;
 import com.example.protrip.data.Conversation;
 import com.example.protrip.data.Message;
+
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.protrip.R;
@@ -39,27 +46,36 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.pedromassango.doubleclick.DoubleClick;
 import com.pedromassango.doubleclick.DoubleClickListener;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity implements View.OnClickListener{
 
     private RecyclerView messagesRV;
     private EditText inputMessage;
-    private String senderId, receiverId, conversationId, myName, receiverName;
+    private TextView receiver, status;
+    private CircleImageView avatar;
+    private Toolbar toolbar;
+    private ImageButton back;
+    private String senderId, receiverId, conversationId, myName,receiverName;
     public static final int MSG_TYPE_RIGHT = 1;
     public static final int MSG_TYPE_LEFT = 0;
     Boolean notify = false;
     APIService apiService;
+    private StorageReference mStorageRef;
 
 
     private FirebaseRecyclerAdapter<Message, MessageViewHolder> firebaseRecyclerAdapter;
@@ -106,6 +122,8 @@ public class ChatActivity extends AppCompatActivity {
                 String date = new SimpleDateFormat(Constant.DATE_FORMAT, Locale.getDefault()).format(new Date(message.getDate()));
                 messageViewHolder.dateMessage.setText(date);
                 RelativeLayout holder = messageViewHolder.messageHolder;
+
+
             }
 
 
@@ -129,7 +147,6 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         initUI();
         initFirebase();
@@ -204,6 +221,26 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         }));
+        inputMessage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                   if(s.toString().trim().length() == 0){
+                       checkTypingStatus("noOne");
+                   }else {
+                       checkTypingStatus(receiverId );
+                   }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
     }
 
@@ -274,10 +311,19 @@ public class ChatActivity extends AppCompatActivity {
                   User user = dataSnapshot.getValue(User.class);
                   if(user != null){
                       receiverName = user.getFullName();
-                      setTitle(receiverName);
-                  }else{
-                      setTitle("Unknown");
+                      receiver.setText(user.getFullName());
+                      if(user.getTypingTo().equals(senderId)){
+                          status.setText("Typing...");
+                      }else {
+                          if(user.getStatus().equals("online")){
+                              status.setText(user.getStatus());
+                          }
+                      }
                   }
+                  mStorageRef = FirebaseStorage.getInstance().getReference();
+                  assert user != null;
+                  StorageReference storageReference = mStorageRef.child("users/"+receiverId+"/profile.jpg");
+                  storageReference.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(avatar));
               }
 
               @Override
@@ -304,6 +350,13 @@ public class ChatActivity extends AppCompatActivity {
 
     private void initUI() {
 
+        toolbar = findViewById(R.id.toolbar_chat);
+        setSupportActionBar(toolbar);
+        back = findViewById(R.id.back_chat);
+        back.setOnClickListener(this);
+        receiver = findViewById(R.id.receiver_name);
+        status = findViewById(R.id.status_chat);
+        avatar = findViewById(R.id.avatar_chat);
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
         messagesRV = findViewById(R.id.messages_rv);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -322,6 +375,11 @@ public class ChatActivity extends AppCompatActivity {
         setChild.child("status").setValue(status);
     }
 
+    private void checkTypingStatus(String typing){
+        DatabaseReference setChild = DB.getReference(Constant.USERS).child(DB.getUserId());
+        setChild.child("typingTo").setValue(typing);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -331,7 +389,15 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        checkTypingStatus("noOne");
         checkOnlineStatus("offline");
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.back_chat :
+                startActivity(new Intent(this, ConversationActivity.class));
+        }
+    }
 }

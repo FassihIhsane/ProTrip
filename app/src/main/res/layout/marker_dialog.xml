@@ -2,30 +2,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/_200sdp"
-    android:layout_height="@dimen/_200sdp"
-    android:background="@drawable/nim"
+    android:layout_height="@dimen/_180sdp"
+   android:background="@drawable/background_dialog"
     android:padding="@dimen/_25sdp">
-
     <EditText
         android:id="@+id/destination"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:hint="@string/destination_hint"
+        android:textColorHint="@color/grey"
         android:padding="@dimen/_5sdp"
         android:maxLength="20"
-        android:backgroundTint="@color/white"
-        android:textCursorDrawable="@color/white"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_24sdp"
-        tools:text="Title of the marker" />
+        android:backgroundTint="@color/colorPrimary"
+        android:textCursorDrawable="@color/colorPrimary"
+        android:textColor="#000000"
+        android:textSize="@dimen/_20sdp"
+        tools:text="Title of the marker"
+        android:autofillHints=""
+        android:inputType="textMultiLine" />
 
     <LinearLayout
         android:id="@+id/crud_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/destination"
-        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:weightSum="4">
 
         <ImageButton
@@ -76,5 +78,4 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/_12sdp"
         android:visibility="gone" />
-
 </RelativeLayout>

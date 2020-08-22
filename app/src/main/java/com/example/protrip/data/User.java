@@ -2,19 +2,28 @@ package com.example.protrip.data;
 
 public class User {
 
-    private String id,email, fullName, password, description,tel,age,status;
+    private String id,email, fullName, password, description,tel,age,status,typingTo;
 
     public User() {
     }
 
-    public User(String email, String fullName,String description,String tel, String age,String status) {
+    public User(String email, String fullName,String description,String tel, String age,String status,String typingTo) {
         this.email = email;
         this.fullName = fullName;
         this.description = description;
         this.tel = tel;
         this.age = age;
         this.status = status;
+        this.typingTo = typingTo;
 
+    }
+
+    public String getTypingTo() {
+        return typingTo;
+    }
+
+    public void setTypingTo(String typingTo) {
+        this.typingTo = typingTo;
     }
 
     public String getDescription() {

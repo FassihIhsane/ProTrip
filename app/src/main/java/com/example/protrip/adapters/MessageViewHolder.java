@@ -15,9 +15,11 @@ import com.example.protrip.data.Message;
 import java.security.PublicKey;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MessageViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView messageText, dateMessage, seen;
+    public TextView messageText, dateMessage;
     public RelativeLayout messageHolder;
 
 
