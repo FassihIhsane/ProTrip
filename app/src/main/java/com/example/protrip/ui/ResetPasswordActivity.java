@@ -83,4 +83,10 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this,LoginActivity.class));
+    }
+
 }

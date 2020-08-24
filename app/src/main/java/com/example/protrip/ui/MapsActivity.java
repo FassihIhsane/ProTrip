@@ -4,6 +4,7 @@ package com.example.protrip.ui;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -29,6 +30,7 @@ import android.widget.Toast;
 
 import com.example.protrip.R;
 import com.example.protrip.data.Trip;
+import com.example.protrip.data.User;
 import com.example.protrip.notifications.Token;
 import com.example.protrip.util.Constant;
 import com.example.protrip.util.DB;
@@ -51,6 +53,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -60,16 +65,21 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener, DialogInterface.OnDismissListener {
 
     private static final String TAG = "MapsActivityDebug";
     private GoogleMap mMap;
     private Marker mMarker;
     private Dialog markerDialog;
-    private TextView destination;
+    private TextView destination,userName;
     private ProgressBar crudProgress;
     private ImageButton add , delete, profile, update;
+    private CircleImageView avatar;
     private SearchView location;
+    private StorageReference mStorageRef;
+    private Toolbar toolbar;
     private Trip mTrip;
     private HashMap<String, Marker> fetchedTrips;
     private FirebaseAuth mAuth;
@@ -85,11 +95,33 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
 
         initUI();
+        fetchedUserName();
         onSearch();
         updateToken(FirebaseInstanceId.getInstance().getToken());
 
 
 
+    }
+
+    private void fetchedUserName() {
+        DB.getReference(Constant.USERS).child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                if(user !=null) {
+                    userName.setText(user.getFullName());
+                    mStorageRef = FirebaseStorage.getInstance().getReference();
+                    StorageReference storageReference = mStorageRef.child("users/"+mUser.getUid()+"/profile.jpg");
+                    storageReference.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(avatar));
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void onSearch() {
@@ -133,6 +165,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         location = findViewById(R.id.sv_location);
+        userName = findViewById(R.id.user);
+        avatar = findViewById(R.id.avatar_map);
+        toolbar = findViewById(R.id.toolbar_map);
+        setSupportActionBar(toolbar);
     }
 
     @Override
